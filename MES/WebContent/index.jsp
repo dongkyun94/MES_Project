@@ -35,7 +35,13 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <c:if test="${! empty authUser }">
+                        <li><a class="dropdown-item" href="logout.do">Logout</a></li>
+                        </c:if>
+                        <c:if test="${empty authUser }">
+                        <li><a class="dropdown-item" href="login.do">Login</a></li>
+                        <li><a class="dropdown-item" href="join.do">Join</a></li>
+                        </c:if>
                     </ul>
                 </li>
             </ul>
