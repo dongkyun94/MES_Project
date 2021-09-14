@@ -4,19 +4,19 @@ import java.util.Date;
 
 public class Order {
 	
-	private int comp_cd;
-	private int plant_cd;
+	private Integer comp_cd;
+	private Integer plant_cd;
 	private String order_no;
 	private Date order_dt;
 	private int item_cd;
 	private String barcode;
-	private String manu_no;
+	private int manu_no;
 	private Date delivery_dt;
 	private int order_qyt;
 	private String order_status;
 	private String remark;
 	
-	public Order(int comp_cd, int plant_cd, String order_no, Date order_dt, int item_cd, String barcode, String manu_no,
+	public Order(Integer comp_cd, Integer plant_cd, String order_no, Date order_dt, int item_cd, String barcode, int manu_no,
 			Date delivery_dt, int order_qyt, String order_status, String remark) {
 		super();
 		this.comp_cd = comp_cd;
@@ -32,11 +32,11 @@ public class Order {
 		this.remark = remark;
 	}
 
-	public int getComp_cd() {
+	public Integer getComp_cd() {
 		return comp_cd;
 	}
 
-	public int getPlant_cd() {
+	public Integer getPlant_cd() {
 		return plant_cd;
 	}
 
@@ -56,7 +56,7 @@ public class Order {
 		return barcode;
 	}
 
-	public String getManu_no() {
+	public int getManu_no() {
 		return manu_no;
 	}
 
