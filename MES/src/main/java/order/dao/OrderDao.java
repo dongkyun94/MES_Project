@@ -18,25 +18,25 @@ public class OrderDao {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("insert into order_"
-					+ "(plant_cd, order_no, order_dt, item_cd, barcode, manu_no, delivery_dt, order_qty, order_status, remark)"
-					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			pstmt.setInt(1, order.getPlant_cd());
-			pstmt.setString(2, order.getOrder_no());
-			pstmt.setTimestamp(3, toTimestamp(order.getOrder_dt()));
-			pstmt.setInt(4, order.getItem_cd());
-			pstmt.setString(5, order.getBarcode());
-			pstmt.setInt(6, order.getManu_no());
-			pstmt.setTimestamp(7, toTimestamp(order.getDelivery_dt()));
-			pstmt.setInt(8, order.getOrder_qyt());
-			pstmt.setString(9, order.getOrder_status());
-			pstmt.setString(10, order.getRemark());
+			pstmt = conn.prepareStatement("insert into ordering"
+					+ "(comp_cd, plant_cd, order_no, order_dt, item_cd, delivery_dt, order_qty, order_status, remark)"
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt.setInt(1, order.getComp_cd());
+			pstmt.setInt(2, order.getPlant_cd());
+			pstmt.setString(3, order.getOrder_no());
+			pstmt.setTimestamp(4, toTimestamp(order.getOrder_dt()));
+			pstmt.setInt(5, order.getItem_cd());
+			pstmt.setTimestamp(6, toTimestamp(order.getDelivery_dt()));
+			pstmt.setInt(7, order.getOrder_qyt());
+			pstmt.setString(8, order.getOrder_status());
+			pstmt.setString(9, order.getRemark());
 			int insertedCount = pstmt.executeUpdate();
 			
 			if(insertedCount > 0) {
 				return order;
 			}
 			else {
+				System.out.println("데이터 입력 실패");
 				return null;
 			}
 		} finally {
