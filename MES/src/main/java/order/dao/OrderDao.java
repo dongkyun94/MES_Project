@@ -75,8 +75,8 @@ public class OrderDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select * from ordering"
-					+ "order by order_no desc limit ?,?");
+			pstmt = conn.prepareStatement("select * from (select row_number() over (order by order_no desc) num, o.* from ordering o order by order_no desc) "
+					+ "where num between ? and ?");
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, size);
 			rs = pstmt.executeQuery();

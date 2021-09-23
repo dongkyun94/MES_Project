@@ -11,7 +11,7 @@
         <meta name="author" content="" />
         <title>Dashboard - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -56,17 +56,18 @@
                             <a class="nav-link" href="/MES">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
+                                
                             </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <div class="sb-sidenav-menu-heading">주 메뉴</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                주문관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                    <a class="nav-link" href="orderinsert.do">주문입력</a>
+                                    <a class="nav-link" href="orderlist.do">주문조회</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -131,8 +132,53 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                         </c:if>
-                        정상 등록 되었습니다.
                     </div>
+                    <table>
+                    <tr>
+                    	<td>회사코드</td>
+                    	<td>공장코드</td>
+                    	<td>주문번호</td>
+                    	<td>주문일자</td>
+                    	<td>아이템코드</td>
+                    	<td>납기일</td>
+                    	<td>주문수량</td>
+                    	<td>주문상태</td>
+                    </tr>
+                    <c:if test="${orderPage.hasNoArticles() }">
+                    <tr>
+                    	<td>입력된 주문이 없습니다.</td>
+                    </tr>
+                    </c:if>
+                    
+                    <c:forEach var="order" items ="${orderPage.content }">
+                    <tr>
+                    	<td>${order.comp_cd }</td>
+                    	<td>${order.plant_cd }</td>
+                    	<td><a href="orderdetail.do?no=${order.order_no}&pageNo=${orderPage.currentPage}"><c:out value="${order.order_no}"/></a></td>
+                    	<td>${order.order_dt }</td>
+                    	<td>${order.item_cd }</td>
+                    	<td>${order.delivery_dt }</td>
+                    	<td>${order.order_qty }</td>
+                    	<td>${order.order_status }</td>
+                    </tr>
+                    </c:forEach>
+                    <c:if test="${orderPage.hasOrder() }">
+                    <tr>
+                    	<td>
+                    	<c:if test = "${orderPage.startPage > 5 }">
+                    	<a href="list.do?pageNo=${orderPage.startPage-5 }">[이전]</a>
+                    	</c:if>
+                    	<c:forEach var = "pNo" begin="${orderPage.startPage }" end = "${orderPage.endPage }">
+                    	<a href="list.do?pageNo=${pNo }">[${pNo}]</a>
+                    	</c:forEach>
+                    	<c:if test="${orderPage.endPage < orderPage.totalPages}">
+                    	<a href="list.do?pageNo=${orderPage.startPage+5 }">[다음]</a>
+                    	</c:if>
+                    	</td>
+                    </tr>
+                    </c:if>
+                    </table>
+                    
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
