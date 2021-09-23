@@ -65,7 +65,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="order/insert.do">주문입력</a>
+                                    <a class="nav-link" href="orderinsert.do">주문입력</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">주문조회</a>
                                 </nav>
                             </div>

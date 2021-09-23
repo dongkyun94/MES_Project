@@ -132,7 +132,7 @@
                         </ol>
                         </c:if>
                     </div>
-                    <form action="insert.do" method="post">
+                    <form action="orderinsert.do" method="post">
                     	<div class="form-group">
                     		<label for="comp_cd" class="col-lg-2 control-label">회사코드</label>
                     		<div class="col-lg-10">
@@ -142,56 +142,56 @@
                         		</select>
                     		</div>
                 		</div>
-                		<div class="form-group">
-                    		<label for="plant_cd" class="col-lg-2 control-label">공장코드</label>
-                    		<div class="col-lg-10">
-                        		<select class="form-control" id="plant_cd" name="plant_cd">
+                		<div>
+                    		<label for="plant_cd">공장코드</label>
+                    		<div>
+                        		<select id="plant_cd" name="plant_cd">
                             		<option value="1000">1000</option>
                             		<option value="1001">1001</option>
                         		</select>
                     		</div>
                 		</div>
-                		<div class="form-group">
-                    		<label for="item_cd" class="col-lg-2 control-label">아이템 코드</label>
-                    		<div class="col-lg-10">
-                        		<select class="form-control" id="item_cd" name="item_cd">
+                		<div>
+                    		<label for="item_cd">아이템 코드</label>
+                    		<div>
+                        		<select id="item_cd" name="item_cd">
                             		<option value="103">103</option>
                             		<option value="104">104</option>
                             		<option value="105">105</option>
                         		</select>
                     		</div>
                 		</div>
-                    	<div class="form-group">
-                    		<label for="order_dt" class="col-lg-2 control-label">주문일자</label>
-                    		<div class="col-lg-10">
+                    	<div>
+                    		<label for="order_dt">주문일자</label>
+                    		<div>
                         		<input type="date" id="order_dt" name="order_dt">
                     		</div>
                 		</div>
-                		<div class="form-group">
+                		<div>
                     		<label for=delivery_dt class="col-lg-2 control-label">납기일자</label>
-                    		<div class="col-lg-10">
+                    		<div>
                         		<input type="date" id="delivery_dt" name="delivery_dt">
                     		</div>
                 		</div>
-                		<div class="form-group">
-                    		<label for=order_qyt class="col-lg-2 control-label">주문수량</label>
-                    		<div class="col-lg-10">
+                		<div>
+                    		<label for=order_qyt>주문수량</label>
+                    		<div>
                         		<input type="text" id="order_qyt" name="order_qyt">
                     		</div>
                 		</div>
-                		<div class="form-group">
-                    		<label for="order_status" class="col-lg-2 control-label">주문상태</label>
-                    		<div class="col-lg-10">
-                        		<select class="form-control" id="order_status" name="order_status">
+                		<div>
+                    		<label for="order_status">주문상태</label>
+                    		<div>
+                        		<select id="order_status" name="order_status">
                             		<option value="초과">초과</option>
                             		<option value="납기">납기</option>
                             		<option value="미납">미납</option>
                         		</select>
                     		</div>
                 		</div>
-                		<div class="form-group">
-                    		<label for="remark" class="col-lg-2 control-label">비고(특이사항)</label>
-                    		<div class="col-lg-10" id="provision">
+                		<div>
+                    		<label for="remark">비고(특이사항)</label>
+                    		<div id="provision">
                         		<textarea class="form-control" rows="8" style="resize:none" name ="remark">
                         		</textarea>
                     		</div>
