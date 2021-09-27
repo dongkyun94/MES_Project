@@ -17,7 +17,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/MES">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="/MES">MES</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -52,7 +52,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <div class="sb-sidenav-menu-heading">Home</div>
                             <a class="nav-link" href="/MES">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
@@ -120,7 +120,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">주문관리</h1>
                         <c:if test="${! empty authUser }">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">${authUser.name }님, 안녕하세요</li>
@@ -128,14 +128,14 @@
                         </c:if>
                         <c:if test="${ empty authUser }">
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">주문관리</li>
                         </ol>
                         </c:if>
                     </div>
                     <form action="orderinsert.do" method="post">
                     	<div class="form-group">
                     		<label for="comp_cd" class="col-lg-2 control-label">회사코드</label>
-                    		<div class="col-lg-10">
+                    		<div class="col-lg-10">	
                         		<select class="form-control" id="comp_cd" name="comp_cd">
                             		<option value="1">1</option>
                             		<option value="2">2</option>
@@ -192,11 +192,13 @@
                 		<div>
                     		<label for="remark">비고(특이사항)</label>
                     		<div id="provision">
-                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark">
-                        		</textarea>
+                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark"></textarea>
                     		</div>
                 		</div>
-                		<input type="submit" value="등록">
+                		<div class ="text-center">
+                			<input type="submit" class = "btn btn-primary" value="등록">
+                		</div>
+                		
                     </form>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
