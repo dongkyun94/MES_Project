@@ -11,13 +11,14 @@
         <meta name="author" content="" />
         <title>Dashboard - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/MES">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="/MES">MES</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -56,17 +57,18 @@
                             <a class="nav-link" href="/MES">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
+                                
                             </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <div class="sb-sidenav-menu-heading">주 메뉴</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                주문관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                    <a class="nav-link" href="orderinsert.do">주문입력</a>
+                                    <a class="nav-link" href="orderlist.do">주문조회</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -120,7 +122,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">주문관리</h1>
                         <c:if test="${! empty authUser }">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">${authUser.name }님, 안녕하세요</li>
@@ -128,11 +130,106 @@
                         </c:if>
                         <c:if test="${ empty authUser }">
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">주문관리</li>
                         </ol>
                         </c:if>
-                        정상 등록 되었습니다.
+                        <button class="btn btn-primary openBtn">모달창 open</button>
+						<div class="modal hidden">
+						  <div class="bg"></div>
+						  <div class="modalBox">
+						    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur quam nobis quis corrupti amet maxime neque, optio, in illo, voluptatibus consequuntur! Rerum quo ea nulla qui, maxime consectetur magni soluta!</p>
+						    <button class="closeBtn">✖</button>
+						  </div>
+						</div>
+                    	 <script>
+						  const open = () => {
+						    document.querySelector(".modal").classList.remove("hidden");
+						  }
+						
+						  const close = () => {
+						    document.querySelector(".modal").classList.add("hidden");
+						  }
+						
+						  document.querySelector(".openBtn").addEventListener("click", open);
+						  document.querySelector(".closeBtn").addEventListener("click", close);
+						  document.querySelector(".bg").addEventListener("click", close);
+						
+						</script>
                     </div>
+                    <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                주문목록
+                            </div>
+                    	<div class="card-body">
+                    	
+						
+						
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>회사코드</th>
+		                    				<th>공장코드</th>
+					                    	<th>주문번호</th>
+					                    	<th>주문일자</th>
+					                    	<th>아이템코드</th>
+					                    	<th>납기일</th>
+					                    	<th>주문수량</th>
+					                    	<th>주문상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>회사코드</th>
+		                    				<th>공장코드</th>
+					                    	<th>주문번호</th>
+					                    	<th>주문일자</th>
+					                    	<th>아이템코드</th>
+					                    	<th>납기일</th>
+					                    	<th>주문수량</th>
+					                    	<th>주문상태</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                   	<c:if test="${orderPage.hasNoOrders() }">
+					                    <tr>
+					                    	<td>입력된 주문이 없습니다.</td>
+					                    </tr>
+					                    </c:if>
+					                    
+					                    <c:forEach var="order" items ="${orderPage.content }">
+						                    <tr>
+						                    	<td>${order.comp_cd }</td>
+						                    	<td>${order.plant_cd }</td>
+						                    	<td><a href="orderdetail.do?no=${order.order_no}&pageNo=${orderPage.currentPage}"><c:out value="${order.order_no}"/></a></td>
+						                    	<td>${order.order_dt }</td>
+						                    	<td>${order.item_cd }</td>
+						                    	<td>${order.delivery_dt }</td>
+						                    	<td>${order.order_qty }</td>
+						                    	<td>${order.order_status }</td>
+						                    </tr>
+					                    </c:forEach>
+                                    </tbody>
+                                </table>
+                     	</div>
+                     </div>
+                   <%--  <div class = "text-center">
+                    	<ul class="pagination">
+                    		
+                    		<c:if test = "${orderPage.startPage > 5 }">
+                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage-5 }">이전</a></li>
+                    		</c:if>
+                    		
+                    		
+                    		<c:forEach var = "pNo" begin="${orderPage.startPage }" end = "${orderPage.endPage }">
+                    		<li class="page-item"><a href="orderlist.do?pageNo=${pNo }">${pNo}</a></li>
+                    		</c:forEach>
+                    		
+                    		<c:if test="${orderPage.endPage < orderPage.totalPages}">
+                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage+5 }">[다음]</a></li>
+                    		</c:if>
+                    	</ul>
+                    </div> --%>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

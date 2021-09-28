@@ -30,7 +30,7 @@ public class OrderDao {
 			pstmt.setTimestamp(4, toTimestamp(order.getOrder_dt()));
 			pstmt.setInt(5, order.getItem_cd());
 			pstmt.setTimestamp(6, toTimestamp(order.getDelivery_dt()));
-			pstmt.setInt(7, order.getOrder_qyt());
+			pstmt.setInt(7, order.getOrder_qty());
 			pstmt.setString(8, order.getOrder_status());
 			pstmt.setString(9, order.getRemark());
 			int insertedCount = pstmt.executeUpdate();
@@ -75,8 +75,8 @@ public class OrderDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select * from ordering"
-					+ "order by order_no desc limit ?,?");
+			pstmt = conn.prepareStatement("select * from (select row_number() over (order by order_no desc) num, o.* from ordering o order by order_no desc) "
+					+ "where num between ? and ?");
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, size);
 			rs = pstmt.executeQuery();
@@ -91,16 +91,35 @@ public class OrderDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
+	
+	public Order selectByNo(Connection conn, String order_no) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from ordering where order_no = ?");
+			pstmt.setString(1, order_no);
+			rs = pstmt.executeQuery();
+			Order order = new Order();
+			while(rs.next()) {
+				order = convertOrder(rs);
+			}
+			return order;
+		}
+		finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
 
 	/*DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드*/
 	private Order convertOrder(ResultSet rs) throws SQLException{
 		return new Order(rs.getInt("comp_cd"),
-				rs.getInt("palnt_cd"),
+				rs.getInt("plant_cd"),
 				rs.getString("order_no"),
 				toDate(rs.getTimestamp("order_dt")),
 				rs.getInt("item_cd"),
 				toDate(rs.getTimestamp("delivery_dt")),
-				rs.getInt("order_qyt"),
+				rs.getInt("order_qty"),
 				rs.getString("order_status"),
 				rs.getString("remark"));
 	}
@@ -108,6 +127,27 @@ public class OrderDao {
 	/*Timestamp -> Date 변환 메소드*/
 	private Date toDate(Timestamp timestamp) {
 		return new Date(timestamp.getTime());
+	}
+	
+	/* 주문 상태 수정 기능*/
+	public int updateStatus(Connection conn, String order_no, String order_status) throws SQLException {
+		try(PreparedStatement pstmt = 
+				conn.prepareStatement(
+						"update ordering set order_status = ? where order_no =?")) {
+			pstmt.setString(1, order_status);
+			pstmt.setString(2, order_no);
+			return pstmt.executeUpdate();
+		}
+	}
+	/*비고 수정 기능*/
+	public int updateReamrk(Connection conn, String order_no, String remark) throws SQLException{
+		try(PreparedStatement pstmt = 
+				conn.prepareStatement(
+						"update ordering set remark = ? where order_no =?")) {
+			pstmt.setString(1, remark);
+			pstmt.setString(2, order_no);
+			return pstmt.executeUpdate();
+		}
 	}
 
 }

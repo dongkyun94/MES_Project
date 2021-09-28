@@ -10,12 +10,15 @@ public class Order {
 	private Date order_dt;
 	private int item_cd;
 	private Date delivery_dt;
-	private int order_qyt;
+	private int order_qty;
 	private String order_status;
 	private String remark;
 	
+	public Order() {
+		
+	}
 	public Order(Integer comp_cd, Integer plant_cd, String order_no, Date order_dt, int item_cd, 
-			Date delivery_dt, int order_qyt, String order_status, String remark) {
+			Date delivery_dt, int order_qty, String order_status, String remark) {
 		super();
 		this.comp_cd = comp_cd;
 		this.plant_cd = plant_cd;
@@ -23,7 +26,7 @@ public class Order {
 		this.order_dt = order_dt;
 		this.item_cd = item_cd;
 		this.delivery_dt = delivery_dt;
-		this.order_qyt = order_qyt;
+		this.order_qty = order_qty;
 		this.order_status = order_status;
 		this.remark = remark;
 	}
@@ -52,8 +55,8 @@ public class Order {
 		return delivery_dt;
 	}
 
-	public int getOrder_qyt() {
-		return order_qyt;
+	public int getOrder_qty() {
+		return order_qty;
 	}
 
 	public String getOrder_status() {

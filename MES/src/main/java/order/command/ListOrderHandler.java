@@ -20,7 +20,7 @@ public class ListOrderHandler implements CommandHandler{
 		}
 		OrderPage orderPage = listService.getOrderPage(pageNo);
 		req.setAttribute("orderPage", orderPage);
-		return "/WEB-INF/view/listOrder.jsp";
+		return "/WEB-INF/view/Order.jsp";
 	}
 
 }
