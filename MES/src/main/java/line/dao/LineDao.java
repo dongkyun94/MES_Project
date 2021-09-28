@@ -12,6 +12,7 @@ import java.util.List;
 
 import jdbc.JdbcUtil;
 import line.model.Line;
+import order.model.Order;
 
 public class LineDao {
 	
@@ -50,10 +51,85 @@ public class LineDao {
 		return new Timestamp(date.getTime());
 	}
 	
+	/*DB에 입력되어 있는 주문 갯수 조회 메소드*/
+	public int selectCount(Connection conn) throws SQLException {
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select count(*) from line");
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
+		}
+	}
+	
+	/*DB order 리스트 조회 메소드*/
+	public List<Line> select (Connection conn, int startRow, int size) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from (select row_number() over (order by line_cd desc) num, o.* from line o order by line_cd desc) "
+					+ "where num between ? and ?");
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, size);
+			rs = pstmt.executeQuery();
+			List<Line> result = new ArrayList<Line>();
+			while(rs.next()) {
+				result.add(convertLine(rs));
+			}
+			return result;
+		}
+		finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public Line selectByNo(Connection conn, String line_cd) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from line where line_cd = ?");
+			pstmt.setString(1, line_cd);
+			rs = pstmt.executeQuery();
+			Line line = new Line();
+			while(rs.next()) {
+				line = convertLine(rs);
+			}
+			return line;
+		}
+		finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+
+	/*DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드*/
+	private Line convertLine(ResultSet rs) throws SQLException{
+		return new Line(rs.getInt("comp_cd"),
+				rs.getInt("plant_cd"),
+				rs.getString("line_cd"),
+				rs.getString("line_nm"),
+				rs.getString("use_yn"),
+				toDate(rs.getTimestamp("in_date")),
+				toDate(rs.getTimestamp("up_date")));
+			
+	}
+	
 
 	/*Timestamp -> Date 변환 메소드*/
 	private Date toDate(Timestamp timestamp) {
-		return new Date(timestamp.getTime());
+		if(timestamp != null) {
+			return new Date(timestamp.getTime());
+		}
+		else {
+			return null;
+		}
 	}
 
 }

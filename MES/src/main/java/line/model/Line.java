@@ -12,6 +12,10 @@ public class Line {
 	private Date in_date;
 	private Date up_date;
 	
+	public Line() {
+		
+	}
+	
 	public Line(Integer comp_cd, Integer plant_cd, String line_cd, String line_nm, String use_yn, 
 			Date in_date, Date up_date) {
 		super();
