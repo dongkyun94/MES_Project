@@ -74,7 +74,7 @@ public class OrderInsertService {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		String first = sdf.format(toDay);
 		String order_no = "D"+first+ idx;
-		return new Order(req.getComp_cd(), req.getPlant_cd(), order_no, toDay, req.getItem_cd(), sdf1.parse(req.getDelivery_dt()), req.getOrder_qyt(), req.getOrder_status(), req.getRemark());
+		return new Order(req.getComp_cd(), req.getPlant_cd(), order_no, sdf1.parse(req.getOrder_dt()), req.getItem_cd(), sdf1.parse(req.getDelivery_dt()), req.getOrder_qyt(), req.getOrder_status(), req.getRemark());
 	}
 
 }

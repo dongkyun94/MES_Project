@@ -45,7 +45,7 @@ public class OrderInsertHandler implements CommandHandler {
 		}
 		String newOrderNo = orderInsertService.insert(orderInsertReq);
 		req.setAttribute("newOrderNo", newOrderNo);
-		return "/WEB-INF/view/Order.jsp";
+		return "orderlist.do";
 	}
 
 	private OrderInsertRequest creatOrderInsertRequest(HttpServletRequest req) {
