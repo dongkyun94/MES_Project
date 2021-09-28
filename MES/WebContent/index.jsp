@@ -66,7 +66,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#">공장관리</a>
-                                    <a class="nav-link" href="lineinsert.do">라인관리</a>
+                                    <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
                                     <a class="nav-link" href="#">품목관리</a>
                                 </nav>
@@ -79,7 +79,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="orderinsert.do">주문입력</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">주문조회</a>
+                                    <a class="nav-link" href="orderlist.do">주문조회</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

@@ -1,5 +1,6 @@
 package line.command;
 
+import java.net.http.HttpClient.Redirect;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,8 @@ public class LineInsertHandler implements CommandHandler {
 		}
 		String newLineNo = lineInsertService.insert(lineInsertReq);
 		req.setAttribute("newLineNo", newLineNo);
-		return "/";
+		return "linelist.do";
+	
 	}
 
 	private LineInsertRequest creatLineInsertRequest(HttpServletRequest req) {
