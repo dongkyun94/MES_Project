@@ -116,20 +116,16 @@ public class LineDao {
 				rs.getString("line_cd"),
 				rs.getString("line_nm"),
 				rs.getString("use_yn"),
-				toDate(rs.getTimestamp("in_date")),
-				toDate(rs.getTimestamp("up_date")));
+				rs.getDate("in_date"),
+				rs.getDate("up_date"));
 			
 	}
 	
 
 	/*Timestamp -> Date 변환 메소드*/
-	private Date toDate(Timestamp timestamp) {
-		if(timestamp != null) {
-			return new Date(timestamp.getTime());
-		}
-		else {
-			return null;
-		}
-	}
+	/*
+	 * private Date toDate(Timestamp timestamp) { if(timestamp != null) { return new
+	 * Date(timestamp.getTime()); } else { return null; } }
+	 */
 
 }

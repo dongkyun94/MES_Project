@@ -60,12 +60,25 @@
                                 
                             </a>
                             <div class="sb-sidenav-menu-heading">주 메뉴</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#basicDataLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                기초데이터관리
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="basicDataLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="#">공장관리</a>
+                                    <a class="nav-link" href="linelist.do">라인관리</a>
+                                    <a class="nav-link" href="#">설비관리</a>
+                                    <a class="nav-link" href="#">품목관리</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 주문관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="orderinsert.do">주문입력</a>
                                     <a class="nav-link" href="orderlist.do">주문조회</a>
@@ -133,38 +146,98 @@
                             <li class="breadcrumb-item active">주문관리</li>
                         </ol>
                         </c:if>
-                        <button class="btn btn-primary openBtn">모달창 open</button>
-						<div class="modal hidden">
-						  <div class="bg"></div>
-						  <div class="modalBox">
-						    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur quam nobis quis corrupti amet maxime neque, optio, in illo, voluptatibus consequuntur! Rerum quo ea nulla qui, maxime consectetur magni soluta!</p>
-						    <button class="closeBtn">✖</button>
-						  </div>
+                        <hr />
+                        <!-- 모달을 열기 위한 버튼 -->
+                        <div class="row mb-2">
+                        	<div class="col">
+	                        	<button type="button" class="btn btn-primary btn-md float-end" data-bs-toggle="modal" data-bs-target="#myModal">
+									입력
+								</button>
+							</div>
 						</div>
-                    	 <script>
-						  const open = () => {
-						    document.querySelector(".modal").classList.remove("hidden");
-						  }
-						
-						  const close = () => {
-						    document.querySelector(".modal").classList.add("hidden");
-						  }
-						
-						  document.querySelector(".openBtn").addEventListener("click", open);
-						  document.querySelector(".closeBtn").addEventListener("click", close);
-						  document.querySelector(".bg").addEventListener("click", close);
-						
-						</script>
-                    </div>
+						<!-- 모달 영역 -->
+						<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel">
+							<div class="modal-dialog modal-xl" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">주문 입력</h4>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+									<!-- 입력 폼-->
+										<form action="orderinsert.do" method="post">
+					                    	<div class="row g-3">
+						                    	<div class="col-sm-6">
+						                    		<label for="comp_cd" class="form-label">회사코드</label>
+						                        		<select class="form-control" id="comp_cd" name="comp_cd">
+						                            		<option value="1">1</option>
+						                            		<option value="2">2</option>
+						                        		</select>
+						                		</div>
+						                		<div class="col-sm-6">
+						                    		<label for="plant_cd" class="form-label">공장코드</label>
+						                        		<select class="form-control" id="plant_cd" name="plant_cd">
+						                            		<option value="1000">1000</option>
+						                            		<option value="1001">1001</option>
+						                        		</select>
+						                		</div>
+						                		<div class="col-12">
+						                    		<label for="item_cd" class="form-label">아이템 코드</label>
+						                        		<select class="form-control" id="item_cd" name="item_cd">
+						                            		<option value="103">103</option>
+						                            		<option value="104">104</option>
+						                            		<option value="105">105</option>
+						                        		</select>
+						                		</div>
+						                    	<div class="col-sm-6">
+						                    		<label for="order_dt" class="form-label">주문일자</label>
+					                        		<input class="form-control" type="date" id="order_dt" name="order_dt">
+						                		</div>
+						                		<div class="col-sm-6">
+						                    		<label for=delivery_dt class="form-label">납기일자</label>
+					                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt">
+						                		</div>
+						                		<div class="col-sm-6">
+						                    		<label for=order_qyt class="form-label">주문수량</label>
+					                        		<input class="form-control" type="text" id="order_qyt" name="order_qyt">
+						                		</div>
+						                		<div class="col-sm-6">
+						                    		<label for="order_status" class="form-label">주문상태</label>
+					                        		<select class="form-control" id="order_status" name="order_status">
+					                            		<option value="초과">초과</option>
+					                            		<option value="납기">납기</option>
+					                            		<option value="미납">미납</option>
+					                        		</select>
+						                		</div>
+						                		<div class="col-12">
+						                    		<label for="remark">비고(특이사항)</label>
+						                    		<div id="provision">
+						                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark"></textarea>
+						                    		</div>
+						                		</div>
+						                		<div class ="text-center">
+						                			<input type="submit" class = "btn btn-primary" value="등록">
+						                		</div>
+						                    </div>
+					                    	
+					                		
+					                    </form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary">확인</button>
+										<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 데이터 테이블 영역 -->
                     <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 주문목록
                             </div>
+                            
                     	<div class="card-body">
-                    	
-						
-						
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -213,6 +286,7 @@
                                 </table>
                      	</div>
                      </div>
+                    </div>
                    <%--  <div class = "text-center">
                     	<ul class="pagination">
                     		

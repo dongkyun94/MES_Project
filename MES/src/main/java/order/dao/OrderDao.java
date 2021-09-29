@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -116,18 +117,19 @@ public class OrderDao {
 		return new Order(rs.getInt("comp_cd"),
 				rs.getInt("plant_cd"),
 				rs.getString("order_no"),
-				toDate(rs.getTimestamp("order_dt")),
+				rs.getDate("order_dt"),
 				rs.getInt("item_cd"),
-				toDate(rs.getTimestamp("delivery_dt")),
+				rs.getDate("delivery_dt"),
 				rs.getInt("order_qty"),
 				rs.getString("order_status"),
 				rs.getString("remark"));
 	}
 	
 	/*Timestamp -> Date 변환 메소드*/
-	private Date toDate(Timestamp timestamp) {
-		return new Date(timestamp.getTime());
-	}
+	/*
+	 * private Date toDate(Timestamp timestamp) { return new
+	 * Date(timestamp.toString()); }
+	 */
 	
 	/* 주문 상태 수정 기능*/
 	public int updateStatus(Connection conn, String order_no, String order_status) throws SQLException {
