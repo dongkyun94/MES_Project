@@ -3,7 +3,6 @@ package line.model;
 import java.util.Date;
 
 public class Line {
-	
 	private Integer comp_cd;
 	private Integer plant_cd;
 	private String line_cd;

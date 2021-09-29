@@ -16,7 +16,7 @@ public class Factory {
 	
 	public Factory(Integer comp_cd, Integer plant_cd, String plant_nm, Date valid_fr_dt, Date valid_to_dt,
 			String remark, String in_usr_id, Date in_date, String up_usr_id, Date up_date) {
-		this.comp_cd = comp_cd;
+		this.comp_cd = comp_cd;		
 		this.plant_cd = plant_cd;
 		this.plant_nm = plant_nm;
 		this.valid_fr_dt = valid_fr_dt;
@@ -25,7 +25,9 @@ public class Factory {
 		this.in_usr_id = in_usr_id;
 		this.in_date = in_date;
 		this.up_usr_id = up_usr_id;
-		this.up_date = up_date;
+		this.up_date = up_date;		
+
+
 	}
 
 	public Integer getComp_cd() {
