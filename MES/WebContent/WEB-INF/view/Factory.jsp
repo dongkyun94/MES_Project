@@ -160,12 +160,12 @@
 							<div class="modal-dialog modal-xl" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">주문 입력</h4>
+										<h4 class="modal-title" id="myModalLabel">공장 입력</h4>
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
 									<!-- 입력 폼-->
-										<form action="orderinsert.do" method="post">
+										<form action="factoryinsert.do" method="post">
 					                    	<div class="row g-3">
 						                    	<div class="col-sm-6">
 						                    		<label for="comp_cd" class="form-label">회사코드</label>
@@ -175,39 +175,24 @@
 						                        		</select>
 						                		</div>
 						                		<div class="col-sm-6">
-						                    		<label for="plant_cd" class="form-label">공장코드</label>
-						                        		<select class="form-control" id="plant_cd" name="plant_cd">
-						                            		<option value="1000">1000</option>
-						                            		<option value="1001">1001</option>
-						                        		</select>
+						                    		<label for=plant_cd class="form-label">공장코드</label>
+					                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd">
 						                		</div>
 						                		<div class="col-12">
-						                    		<label for="item_cd" class="form-label">아이템 코드</label>
-						                        		<select class="form-control" id="item_cd" name="item_cd">
-						                            		<option value="103">103</option>
-						                            		<option value="104">104</option>
-						                            		<option value="105">105</option>
-						                        		</select>
+						                    		<label for=plant_nm class="form-label">공장명</label>
+					                        		<input class="form-control" type="text" id="plant_nm" name="plant_nm">
 						                		</div>
 						                    	<div class="col-sm-6">
-						                    		<label for="order_dt" class="form-label">주문일자</label>
-					                        		<input class="form-control" type="date" id="order_dt" name="order_dt">
+						                    		<label for="valid_fr_dt" class="form-label">유효시작일</label>
+					                        		<input class="form-control" type="date" id="valid_fr_dt" name="valid_fr_dt">
 						                		</div>
 						                		<div class="col-sm-6">
-						                    		<label for=delivery_dt class="form-label">납기일자</label>
-					                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt">
+						                    		<label for=valid_to_dt class="form-label">유효종료일</label>
+					                        		<input class="form-control" type="date" id="valid_to_dt" name="valid_to_dt">
 						                		</div>
 						                		<div class="col-sm-6">
-						                    		<label for=order_qyt class="form-label">주문수량</label>
-					                        		<input class="form-control" type="text" id="order_qyt" name="order_qyt">
-						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for="order_status" class="form-label">주문상태</label>
-					                        		<select class="form-control" id="order_status" name="order_status">
-					                            		<option value="초과">초과</option>
-					                            		<option value="납기">납기</option>
-					                            		<option value="미납">미납</option>
-					                        		</select>
+						                    		<label for=in_date class="form-label">등록일</label>
+					                        		<input class="form-control" type="date" id="in_date" name="in_date">
 						                		</div>
 						                		<div class="col-12">
 						                    		<label for="remark">비고(특이사항)</label>
@@ -234,7 +219,7 @@
                     <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                주문목록
+                                공장목록
                             </div>
                             
                     	<div class="card-body">
@@ -243,43 +228,41 @@
                                         <tr>
                                             <th>회사코드</th>
 		                    				<th>공장코드</th>
-					                    	<th>주문번호</th>
-					                    	<th>주문일자</th>
-					                    	<th>아이템코드</th>
-					                    	<th>납기일</th>
-					                    	<th>주문수량</th>
-					                    	<th>주문상태</th>
+					                    	<th>공장명</th>
+					                    	<th>유효시작일</th>
+					                    	<th>유효종료일</th>
+					                    	<th>등록일</th>
+					                    	<th>수정일</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>회사코드</th>
 		                    				<th>공장코드</th>
-					                    	<th>주문번호</th>
-					                    	<th>주문일자</th>
-					                    	<th>아이템코드</th>
-					                    	<th>납기일</th>
-					                    	<th>주문수량</th>
-					                    	<th>주문상태</th>
+					                    	<th>공장명</th>
+					                    	<th>유효시작일</th>
+					                    	<th>유효종료일</th>
+					                    	<th>등록일</th>
+					                    	<th>수정일</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                    	<c:if test="${orderPage.hasNoOrders() }">
 					                    <tr>
-					                    	<td>입력된 주문이 없습니다.</td>
+					                    	<td>입력된 공장이 없습니다.</td>
 					                    </tr>
 					                    </c:if>
 					                    
-					                    <c:forEach var="order" items ="${orderPage.content }">
+					                    <c:forEach var="factory" items ="${factoryPage.content }">
 						                    <tr>
-						                    	<td>${order.comp_cd }</td>
-						                    	<td>${order.plant_cd }</td>
-						                    	<td><a href="orderdetail.do?no=${order.order_no}&pageNo=${orderPage.currentPage}"><c:out value="${order.order_no}"/></a></td>
-						                    	<td>${order.order_dt }</td>
-						                    	<td>${order.item_cd }</td>
-						                    	<td>${order.delivery_dt }</td>
-						                    	<td>${order.order_qty }</td>
-						                    	<td>${order.order_status }</td>
+						                    	<td>${factory.comp_cd }</td>
+						                    	<td><a href="orderdetail.do?no=${factory.plant_cd}&pageNo=${factoryPage.currentPage}"><c:out value="${factory.plant_cd}"/></a></td>
+						                    	<td>${factory.plant_nm }</td>
+						                    	<td>${factory.valid_fr_dt }</td>
+						                    	<td>${factory.valid_to_dt }</td>
+						                    	<td>${factory.in_date }</td>
+						                    	<c:if test="${line.up_date != null}"><td>${line.up_date }</td></c:if>
+							                    <c:if test="${line.up_date == null}"><td> </td></c:if>
 						                    </tr>
 					                    </c:forEach>
                                     </tbody>

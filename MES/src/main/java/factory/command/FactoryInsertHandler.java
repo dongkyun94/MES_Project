@@ -44,7 +44,7 @@ public class FactoryInsertHandler implements CommandHandler{
 		}
 		int newFactoryNo = factoryInsertService.insert(factoryInsertReq);
 		req.setAttribute("newFactoryNo", newFactoryNo);
-		return "/";
+		return "factorylist.do";
 	}
 
 	private FactoryInsertRequest creatFactoryInsertRequest(HttpServletRequest req) {
