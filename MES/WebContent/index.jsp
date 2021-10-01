@@ -65,7 +65,7 @@
                             </a>
                             <div class="collapse" id="basicDataLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">공장관리</a>
+                                    <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
                                     <a class="nav-link" href="#">품목관리</a>
