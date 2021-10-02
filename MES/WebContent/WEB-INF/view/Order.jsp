@@ -249,6 +249,7 @@
 					                    	<th>납기일</th>
 					                    	<th>주문수량</th>
 					                    	<th>주문상태</th>
+					                    	<th>삭제</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -261,6 +262,7 @@
 					                    	<th>납기일</th>
 					                    	<th>주문수량</th>
 					                    	<th>주문상태</th>
+					                    	<th>삭제</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -280,13 +282,18 @@
 						                    	<td>${order.delivery_dt }</td>
 						                    	<td>${order.order_qty }</td>
 						                    	<td>${order.order_status }</td>
+						                    	<td><a class = "btn btn-danger btn-sm" href=javascript:deleteConfirm()><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+												</svg> 삭제</a></td>
+												
+												
 						                    </tr>
 					                    </c:forEach>
                                     </tbody>
                                 </table>
                      	</div>
                      </div>
-                    </div>
+                    </div> <!-- 컨테이너 영역 끝 -->
                    <%--  <div class = "text-center">
                     	<ul class="pagination">
                     		
