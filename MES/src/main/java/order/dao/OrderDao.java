@@ -15,8 +15,8 @@ import jdbc.JdbcUtil;
 import order.model.Order;
 
 public class OrderDao {
-	
-	/* 주문내용 DB 입력을 위한 insert 메소드*/
+
+	/* 주문내용 DB 입력을 위한 insert 메소드 */
 	public Order insert(Connection conn, Order order) throws SQLException {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
@@ -35,11 +35,10 @@ public class OrderDao {
 			pstmt.setString(8, order.getOrder_status());
 			pstmt.setString(9, order.getRemark());
 			int insertedCount = pstmt.executeUpdate();
-			
-			if(insertedCount > 0) {
+
+			if (insertedCount > 0) {
 				return order;
-			}
-			else {
+			} else {
 				System.out.println("데이터 입력 실패");
 				return null;
 			}
@@ -49,19 +48,19 @@ public class OrderDao {
 			JdbcUtil.close(stmt);
 		}
 	}
-	
+
 	private Timestamp toTimestamp(Date date) {
 		return new Timestamp(date.getTime());
 	}
-	
-	/*DB에 입력되어 있는 주문 갯수 조회 메소드*/
+
+	/* DB에 입력되어 있는 주문 갯수 조회 메소드 */
 	public int selectCount(Connection conn) throws SQLException {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select count(*) from ordering");
-			if(rs.next()) {
+			if (rs.next()) {
 				return rs.getInt(1);
 			}
 			return 0;
@@ -70,30 +69,30 @@ public class OrderDao {
 			JdbcUtil.close(stmt);
 		}
 	}
-	
-	/*DB order 리스트 조회 메소드*/
-	public List<Order> select (Connection conn, int startRow, int size) throws SQLException{
+
+	/* DB order 리스트 조회 메소드 */
+	public List<Order> select(Connection conn, int startRow, int size) throws SQLException {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select * from (select row_number() over (order by order_no desc) num, o.* from ordering o order by order_no desc) "
-					+ "where num between ? and ?");
+			pstmt = conn.prepareStatement(
+					"select * from (select row_number() over (order by order_no desc) num, o.* from ordering o order by order_no desc) "
+							+ "where num between ? and ?");
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, size);
 			rs = pstmt.executeQuery();
 			List<Order> result = new ArrayList<Order>();
-			while(rs.next()) {
+			while (rs.next()) {
 				result.add(convertOrder(rs));
 			}
 			return result;
-		}
-		finally {
+		} finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
 		}
 	}
-	
-	public Order selectByNo(Connection conn, String order_no) throws SQLException{
+
+	public Order selectByNo(Connection conn, String order_no) throws SQLException {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -101,55 +100,46 @@ public class OrderDao {
 			pstmt.setString(1, order_no);
 			rs = pstmt.executeQuery();
 			Order order = new Order();
-			while(rs.next()) {
+			while (rs.next()) {
 				order = convertOrder(rs);
 			}
 			return order;
-		}
-		finally {
+		} finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
 		}
 	}
 
-	/*DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드*/
-	private Order convertOrder(ResultSet rs) throws SQLException{
-		return new Order(rs.getInt("comp_cd"),
-				rs.getInt("plant_cd"),
-				rs.getString("order_no"),
-				rs.getDate("order_dt"),
-				rs.getInt("item_cd"),
-				rs.getDate("delivery_dt"),
-				rs.getInt("order_qty"),
-				rs.getString("order_status"),
+	/* DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드 */
+	private Order convertOrder(ResultSet rs) throws SQLException {
+		return new Order(rs.getInt("comp_cd"), rs.getInt("plant_cd"), rs.getString("order_no"), rs.getDate("order_dt"),
+				rs.getInt("item_cd"), rs.getDate("delivery_dt"), rs.getInt("order_qty"), rs.getString("order_status"),
 				rs.getString("remark"));
 	}
-	
-	/*Timestamp -> Date 변환 메소드*/
+
+	/* Timestamp -> Date 변환 메소드 */
 	/*
 	 * private Date toDate(Timestamp timestamp) { return new
 	 * Date(timestamp.toString()); }
 	 */
-	
-	/* 주문 상태 수정 기능*/
-	public int updateStatus(Connection conn, String order_no, String order_status) throws SQLException {
-		try(PreparedStatement pstmt = 
-				conn.prepareStatement(
-						"update ordering set order_status = ? where order_no =?")) {
-			pstmt.setString(1, order_status);
-			pstmt.setString(2, order_no);
-			return pstmt.executeUpdate();
-		}
-	}
-	/*비고 수정 기능*/
-	public int updateReamrk(Connection conn, String order_no, String remark) throws SQLException{
-		try(PreparedStatement pstmt = 
-				conn.prepareStatement(
-						"update ordering set remark = ? where order_no =?")) {
-			pstmt.setString(1, remark);
-			pstmt.setString(2, order_no);
-			return pstmt.executeUpdate();
-		}
-	}
 
+	/* 주문 상태 수정 기능 */
+	public int update(Connection conn, String order_no, String order_status , Date delivery_dt, int order_qty, String remark) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("update ordering set order_status, delivery_dt, order_qty, remark = ? where order_no =?")) {
+			pstmt.setString(1, order_status);
+			pstmt.setTimestamp(2, toTimestamp(delivery_dt));
+			pstmt.setInt(3, order_qty);
+			pstmt.setString(4, remark);
+			pstmt.setString(5, order_no);
+			return pstmt.executeUpdate();
+		}
+	}
+	/*
+	 * 비고 수정 기능 public int updateReamrk(Connection conn, String order_no, String
+	 * remark) throws SQLException{ try(PreparedStatement pstmt =
+	 * conn.prepareStatement( "update ordering set remark = ? where order_no =?")) {
+	 * pstmt.setString(1, remark); pstmt.setString(2, order_no); return
+	 * pstmt.executeUpdate(); } }
+	 */
 }

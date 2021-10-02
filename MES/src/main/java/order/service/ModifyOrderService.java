@@ -8,11 +8,34 @@ import jdbc.connection.ConnectionProvider;
 import order.dao.OrderDao;
 import order.model.Order;
 
-public class ModifyOrderStatusService {
+public class ModifyOrderService {
 	
 	private OrderDao orderDao = new OrderDao();
 	
-	public void modify(ModifyStatusRequest modReq) {
+	public Order loadData(String noVal) {
+		Connection conn = null;
+		Order order = new Order();
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+			
+			order = orderDao.selectByNo(conn, noVal);
+			if(order == null) {
+				throw new OrderNotFountException();
+			}
+			//아래 if 문은 수정 필요 (권한 기능 추가와 함께)
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (PermissionDeniedException e) {
+			throw e;
+		}
+		finally {
+			JdbcUtil.close(conn);
+		}
+		return order;
+	}
+	
+	public void modify(ModifyOrderRequest modReq) {
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
@@ -26,7 +49,7 @@ public class ModifyOrderStatusService {
 			if(!canModify()) {
 				throw new PermissionDeniedException();
 			}
-			orderDao.updateStatus(conn, modReq.getOrder_no(), modReq.getOrder_status());
+			orderDao.update(conn, modReq.getOrder_no(), modReq.getOrder_status(), modReq.getDelivery_dt(), modReq.getOrder_qty(), modReq.getRemark());
 			conn.commit();
 		} catch (SQLException e) {
 			JdbcUtil.rollback(conn);

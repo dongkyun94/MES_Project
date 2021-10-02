@@ -1,6 +1,9 @@
 package order.command;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,16 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.command.CommandHandler;
 import member.model.Member;
-import order.service.ModifyOrderStatusService;
-import order.service.ModifyStatusRequest;
+import order.service.ModifyOrderService;
+import order.model.Order;
+import order.service.ModifyOrderRequest;
 import order.service.OrderNotFountException;
 import order.service.PermissionDeniedException;
 
-public class ModifyOrderStatusHandler implements CommandHandler{
+public class ModifyOrderHandler implements CommandHandler{
 	
-	private static final String FORM_VIEW = "/WEB-INF/view/modifyForm.jsp";
+	private static final String FORM_VIEW = "/WEB-INF/view/orderlist.jsp";
 	
-	private ModifyOrderStatusService modifyService = new ModifyOrderStatusService();
+	private ModifyOrderService modifyService = new ModifyOrderService();
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -32,18 +36,19 @@ public class ModifyOrderStatusHandler implements CommandHandler{
 		}
 	}
 
-	private String processForm(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	private String processForm(HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException {
 		
 		try {
 			String noVal = req.getParameter("order_no");
-			String statusVal = req.getParameter("order_status");
+			Order loadData = modifyService.loadData(noVal);
 			Member member = (Member) req.getSession().getAttribute("authUser");
+			
 			if(!canModify(member)) {
 				res.sendError(HttpServletResponse.SC_FORBIDDEN);
 				return null;
 			}
-			ModifyStatusRequest modReq = new ModifyStatusRequest(noVal, statusVal);
-			
+			ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, loadData.getOrder_status(), loadData.getDelivery_dt(), loadData.getOrder_qty(), loadData.getRemark());
+			req.setAttribute("orderdata", loadData);
 			req.setAttribute("modReq", modReq);
 			return FORM_VIEW;
 		}  catch (OrderNotFountException e) {
@@ -57,12 +62,17 @@ public class ModifyOrderStatusHandler implements CommandHandler{
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Member member = (Member) req.getSession().getAttribute("authUser");
 		String noVal = req.getParameter("order_no");
 		String statusVal = req.getParameter("order_status");
+		Date deliveryVal = sdf.parse(req.getParameter("delivery_dt"));
+		int qtyVal = Integer.parseInt(req.getParameter("order_qty"));
+		String remarkVal = req.getParameter("remark");
 		
-		ModifyStatusRequest modReq = new ModifyStatusRequest(noVal, statusVal);
+		ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, statusVal, deliveryVal, qtyVal, remarkVal);
 		req.setAttribute("modReq", modReq);
+		
 		
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();
 		req.setAttribute("errors", errors);
@@ -71,7 +81,7 @@ public class ModifyOrderStatusHandler implements CommandHandler{
 		}
 		try {
 			modifyService.modify(modReq);
-			return "/WEB-INF/view/modifySuccess.jsp";
+			return "orderlist.do";
 		} catch (OrderNotFountException e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;
