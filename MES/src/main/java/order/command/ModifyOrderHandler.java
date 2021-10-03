@@ -39,7 +39,7 @@ public class ModifyOrderHandler implements CommandHandler{
 	private String processForm(HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException {
 		
 		try {
-			String noVal = req.getParameter("order_no");
+			String noVal = req.getParameter("no");
 			Order loadData = modifyService.loadData(noVal);
 			Member member = (Member) req.getSession().getAttribute("authUser");
 			

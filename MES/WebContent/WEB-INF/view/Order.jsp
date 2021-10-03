@@ -276,7 +276,7 @@
 						                    <tr>
 						                    	<td>${order.comp_cd }</td>
 						                    	<td>${order.plant_cd }</td>
-						                    	<td><a href="ordermodify.do?no=${order.order_no}&pageNo=${orderPage.currentPage}"data-bs-toggle="modal" data-bs-target="#contentModal"><c:out value="${order.order_no}"/></a></td>
+						                    	<td><a href="ordermodify.do?no=${order.order_no}" data-bs-toggle="modal" data-bs-target="#contentModal" onclick=""><c:out value="${order.order_no}"/></a></td>
 						                    	<td>${order.order_dt }</td>
 						                    	<td>${order.item_cd }</td>
 						                    	<td>${order.delivery_dt }</td>
@@ -305,19 +305,19 @@
 					                    	<div class="row g-3">
 						                    	<div class="col-sm-6">
 						                    		<label for="comp_cd" class="form-label">회사코드</label>
-						                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${orderdata.comp_cd }" disabled="disabled">
+						                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${orderdata.comp_cd }" readonly>
 						                		</div>
 						                		<div class="col-sm-6">
 						                    		<label for="plant_cd" class="form-label">공장코드</label>
-						                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${orderdata.plant_cd }" disabled="disabled">
+						                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${orderdata.plant_cd }" readonly>
 						                		</div>
 						                		<div class="col-12">
 						                    		<label for="item_cd" class="form-label">아이템 코드</label>
-						                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${orderdata.item_cd }" disabled="disabled">
+						                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${orderdata.item_cd }" readonly>
 						                		</div>
 						                    	<div class="col-sm-6">
 						                    		<label for="order_dt" class="form-label">주문일자</label>
-					                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${orderdata.order_dt }" disabled="disabled">
+					                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${orderdata.order_dt }" readonly>
 						                		</div>
 						                		<div class="col-sm-6">
 						                    		<label for=delivery_dt class="form-label">납기일자</label>
@@ -342,7 +342,7 @@
 						                    		</div>
 						                		</div>
 						                		<div class ="text-center">
-						                			<input type="submit" class = "btn btn-primary" value="등록">
+						                			<input type="submit" class = "btn btn-primary" value="수정">
 						                		</div>
 						                    </div>
 					                    	
@@ -358,7 +358,14 @@
 						</div>
                      	</div>
                      </div>
-                    </div> <!-- 컨테이너 영역 끝 -->
+                    </div>
+                    <script>
+                    function modify(){
+                    	location.href="ordermodify.do?no=${order.order_no}"
+                    }
+                    </script>
+                    <!-- 컨테이너 영역 끝 -->
+                    
                    <%--  <div class = "text-center">
                     	<ul class="pagination">
                     		
