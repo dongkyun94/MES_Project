@@ -10,8 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import auth.service.User;
 import member.command.CommandHandler;
-import member.model.Member;
 import order.service.ModifyOrderService;
 import order.model.Order;
 import order.service.ModifyOrderRequest;
@@ -20,7 +20,7 @@ import order.service.PermissionDeniedException;
 
 public class ModifyOrderHandler implements CommandHandler{
 	
-	private static final String FORM_VIEW = "/WEB-INF/view/orderlist.jsp";
+	private static final String FORM_VIEW = "/WEB-INF/view/modifyOrderModal.jsp";
 	
 	private ModifyOrderService modifyService = new ModifyOrderService();
 
@@ -41,29 +41,29 @@ public class ModifyOrderHandler implements CommandHandler{
 		try {
 			String noVal = req.getParameter("no");
 			Order loadData = modifyService.loadData(noVal);
-			Member member = (Member) req.getSession().getAttribute("authUser");
+			User user = (User) req.getSession().getAttribute("authUser");
 			
-			if(!canModify(member)) {
+			if(!canModify(user)) {
 				res.sendError(HttpServletResponse.SC_FORBIDDEN);
-				return null;
+				return FORM_VIEW;
 			}
 			ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, loadData.getOrder_status(), loadData.getDelivery_dt(), loadData.getOrder_qty(), loadData.getRemark());
 			req.setAttribute("orderdata", loadData);
 			req.setAttribute("modReq", modReq);
-			return FORM_VIEW;
+			return null;
 		}  catch (OrderNotFountException e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 	}
 	
-	private boolean canModify(Member member) {
+	private boolean canModify(User user) {
 		return true;
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws Exception{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Member member = (Member) req.getSession().getAttribute("authUser");
+		User user = (User) req.getSession().getAttribute("authUser");
 		String noVal = req.getParameter("order_no");
 		String statusVal = req.getParameter("order_status");
 		Date deliveryVal = sdf.parse(req.getParameter("delivery_dt"));

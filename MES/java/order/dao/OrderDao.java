@@ -123,10 +123,10 @@ public class OrderDao {
 	 * Date(timestamp.toString()); }
 	 */
 
-	/* 주문 상태 수정 기능 */
+	/* 주문  수정 기능 */
 	public int update(Connection conn, String order_no, String order_status , Date delivery_dt, int order_qty, String remark) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("update ordering set order_status, delivery_dt, order_qty, remark = ? where order_no =?")) {
+				.prepareStatement("update ordering set order_status = ?, delivery_dt = ?, order_qty = ?, remark = ? where order_no = ?")) {
 			pstmt.setString(1, order_status);
 			pstmt.setTimestamp(2, toTimestamp(delivery_dt));
 			pstmt.setInt(3, order_qty);
@@ -135,11 +135,13 @@ public class OrderDao {
 			return pstmt.executeUpdate();
 		}
 	}
-	/*
-	 * 비고 수정 기능 public int updateReamrk(Connection conn, String order_no, String
-	 * remark) throws SQLException{ try(PreparedStatement pstmt =
-	 * conn.prepareStatement( "update ordering set remark = ? where order_no =?")) {
-	 * pstmt.setString(1, remark); pstmt.setString(2, order_no); return
-	 * pstmt.executeUpdate(); } }
-	 */
+	/* 주문 삭제 기능 */
+	public int delete(Connection conn, String order_no) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("delete from ordering where order_no = ?")) {
+			pstmt.setString(1, order_no);
+			return pstmt.executeUpdate();
+		}
+	}
+
 }
