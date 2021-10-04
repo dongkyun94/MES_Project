@@ -13,7 +13,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -276,13 +276,81 @@
 						                    <tr>
 						                    	<td>${order.comp_cd }</td>
 						                    	<td>${order.plant_cd }</td>
-						                    	<td><a href="ordermodify.do?no=${order.order_no}" data-bs-toggle="modal" data-bs-target="#contentModal" onclick=""><c:out value="${order.order_no}"/></a></td>
+						                    	<td><a href="#" onclick="modifyorder.do?no=${order.order_no}" data-bs-toggle="modal" data-bs-target="#contentModal"><c:out value="${order.order_no}"/></a>
+						                    	<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel">
+													<div class="modal-dialog modal-xl" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+															<h4 class="modal-title" id="myModalLabel">주문</h4>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+														<div class="modal-body">
+														<!-- 입력 폼-->
+															<form action="ordermodify.do" method="post">
+										                    	<div class="row g-3">
+										                    	<div class="col-sm-12">
+											                    		<label for="order_no" class="form-label">주문번호</label>
+											                        		<input class="form-control" type="hidden" id="order_no" name="order_no" value="${order.order_no }" readonly>
+											                		</div>
+											                    	<div class="col-sm-6">
+											                    		<label for="comp_cd" class="form-label">회사코드</label>
+											                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${order.comp_cd }" readonly>
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for="plant_cd" class="form-label">공장코드</label>
+											                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${order.plant_cd }" readonly>
+											                		</div>
+											                		<div class="col-12">
+											                    		<label for="item_cd" class="form-label">아이템 코드</label>
+											                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${order.item_cd }" readonly>
+											                		</div>
+											                    	<div class="col-sm-6">
+											                    		<label for="order_dt" class="form-label">주문일자</label>
+										                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${order.order_dt }" readonly>
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for=delivery_dt class="form-label">납기일자</label>
+										                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt" value="${order.delivery_dt }">
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for=order_qty class="form-label">주문수량</label>
+										                        		<input class="form-control" type="text" id="order_qty" name="order_qty" value="${order.order_qty }">
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for="order_status" class="form-label">주문상태</label>
+										                        		<select class="form-control" id="order_status" name="order_status">
+										                            		<option value="초과">초과</option>
+										                            		<option value="납기">납기</option>
+										                            		<option value="미납">미납</option>
+										                        		</select>
+											                		</div>
+											                		<div class="col-12">
+											                    		<label for="remark">비고(특이사항)</label>
+											                    		<div id="provision">
+											                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark" >${order.remark }</textarea>
+											                    		</div>
+											                		</div>
+											                		<div class ="text-center">
+											                			<input type="submit" class = "btn btn-primary" value="수정">
+											                		</div>
+											                    </div>
+										                    </form>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary">확인</button>
+															<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
+														</div>
+													</div>
+												</div>
+											</div>
+						                    	</td>
+						                    	
 						                    	<td>${order.order_dt }</td>
 						                    	<td>${order.item_cd }</td>
 						                    	<td>${order.delivery_dt }</td>
 						                    	<td>${order.order_qty }</td>
 						                    	<td>${order.order_status }</td>
-						                    	<td><a class = "btn btn-danger btn-sm" href=javascript:deleteConfirm()><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+						                    	<td><a class = "btn btn-danger btn-sm" href="orderdelete.do?order_no=${order.order_no}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 												</svg> 삭제</a></td>
 												
@@ -292,78 +360,11 @@
 					                    
                                     </tbody>
                                 </table>
-                                <div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel">
-							<div class="modal-dialog modal-xl" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">주문</h4>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-									<!-- 입력 폼-->
-										<form action="ordermodify.do" method="post">
-					                    	<div class="row g-3">
-						                    	<div class="col-sm-6">
-						                    		<label for="comp_cd" class="form-label">회사코드</label>
-						                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${orderdata.comp_cd }" readonly>
-						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for="plant_cd" class="form-label">공장코드</label>
-						                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${orderdata.plant_cd }" readonly>
-						                		</div>
-						                		<div class="col-12">
-						                    		<label for="item_cd" class="form-label">아이템 코드</label>
-						                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${orderdata.item_cd }" readonly>
-						                		</div>
-						                    	<div class="col-sm-6">
-						                    		<label for="order_dt" class="form-label">주문일자</label>
-					                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${orderdata.order_dt }" readonly>
-						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for=delivery_dt class="form-label">납기일자</label>
-					                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt" value="${modReq.delivery_dt }">
-						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for=order_qyt class="form-label">주문수량</label>
-					                        		<input class="form-control" type="text" id="order_qyt" name="order_qyt" value="${modReq.order_qyt }">
-						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for="order_status" class="form-label">주문상태</label>
-					                        		<select class="form-control" id="order_status" name="order_status">
-					                            		<option value="초과">초과</option>
-					                            		<option value="납기">납기</option>
-					                            		<option value="미납">미납</option>
-					                        		</select>
-						                		</div>
-						                		<div class="col-12">
-						                    		<label for="remark">비고(특이사항)</label>
-						                    		<div id="provision">
-						                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark" >${modReq.remark }</textarea>
-						                    		</div>
-						                		</div>
-						                		<div class ="text-center">
-						                			<input type="submit" class = "btn btn-primary" value="수정">
-						                		</div>
-						                    </div>
-					                    	
-					                		
-					                    </form>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-primary">확인</button>
-										<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-									</div>
-								</div>
-							</div>
-						</div>
+                                
                      	</div>
                      </div>
                     </div>
-                    <script>
-                    function modify(){
-                    	location.href="ordermodify.do?no=${order.order_no}"
-                    }
-                    </script>
+                    
                     <!-- 컨테이너 영역 끝 -->
                     
                    <%--  <div class = "text-center">
@@ -401,8 +402,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
+        <!-- <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
