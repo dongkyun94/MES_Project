@@ -14,6 +14,8 @@ public class Factory {
 	private String up_usr_id;
 	private Date up_date;
 	
+	public Factory() {};
+	
 	public Factory(Integer comp_cd, Integer plant_cd, String plant_nm, Date valid_fr_dt, Date valid_to_dt,
 			String remark, String in_usr_id, Date in_date, String up_usr_id, Date up_date) {
 		this.comp_cd = comp_cd;		

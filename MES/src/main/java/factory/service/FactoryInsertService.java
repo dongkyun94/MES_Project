@@ -10,7 +10,7 @@ import java.util.Date;
 
 import jdbc.JdbcUtil;
 import jdbc.connection.ConnectionProvider;
-import factory.Dao.FactoryDao;
+import factory.dao.FactoryDao;
 import factory.model.Factory;
 
 public class FactoryInsertService {
