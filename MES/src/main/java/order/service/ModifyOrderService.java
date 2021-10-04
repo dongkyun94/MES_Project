@@ -23,7 +23,6 @@ public class ModifyOrderService {
 			if(order == null) {
 				throw new OrderNotFountException();
 			}
-			//아래 if 문은 수정 필요 (권한 기능 추가와 함께)
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} catch (PermissionDeniedException e) {
