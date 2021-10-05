@@ -128,4 +128,17 @@ public class LineDao {
 	 * Date(timestamp.getTime()); } else { return null; } }
 	 */
 
+	/* 주문 상태 수정 기능*/
+	public int updateStatus(Connection conn, String line_cd, String use_yn) throws SQLException {
+		try(PreparedStatement pstmt = 
+				conn.prepareStatement(
+						"update LINE set use_yn = ? where line_cd =?")) {
+			pstmt.setString(1, use_yn);
+			pstmt.setString(2, line_cd);
+			return pstmt.executeUpdate();
+		}
+	}
+
+
 }
+
