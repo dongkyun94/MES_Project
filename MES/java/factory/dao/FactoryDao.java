@@ -93,12 +93,12 @@ public class FactoryDao {
 		}
 	}
 	
-	public Factory selectByNo(Connection conn, String plant_cd) throws SQLException{
+	public Factory selectByNo(Connection conn, int plant_cd) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("select * from factory where plant_cd = ?");
-			pstmt.setString(1, plant_cd);
+			pstmt.setInt(1, plant_cd);
 			rs = pstmt.executeQuery();
 			Factory factory = new Factory();
 			while(rs.next()) {
@@ -132,5 +132,27 @@ public class FactoryDao {
 	private Date toDate(Timestamp timestamp) {
 		return new Date(timestamp.getTime());
 	}
+	
+	/* 주문  수정 기능 */
+	public int update(Connection conn, int plant_cd, String plant_nm , Date valid_fr_dt, Date valid_to_dt, String up_usr_id) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("update factorying set plant_nm = ?, valid_fr_dt = ?, valid_to_dt = ?, up_usr_id = ? where PLANT_CD = ?")) {
+			pstmt.setString(1, plant_nm);
+			pstmt.setTimestamp(2, toTimestamp(valid_fr_dt));
+			pstmt.setTimestamp(3, toTimestamp(valid_to_dt));
+			pstmt.setString(4,up_usr_id);
+			pstmt.setInt(5, plant_cd);
+			return pstmt.executeUpdate();
+		}
+	}
+	/* 주문 삭제 기능 */
+	public int delete(Connection conn, int plant_cd) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("delete from factorying where plant_cd = ?")) {
+			pstmt.setInt(1, plant_cd);
+			return pstmt.executeUpdate();
+		}
+	}
 
-}	
+}
+
