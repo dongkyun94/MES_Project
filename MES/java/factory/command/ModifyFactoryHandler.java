@@ -20,7 +20,7 @@ import factory.service.PermissionDeniedException;
 
 public class ModifyFactoryHandler implements CommandHandler{
 	
-	private static final String FORM_VIEW = "/WEB-INF/view/modifyFactoryModal.jsp";
+	private static final String FORM_VIEW = "/WEB-INF/view/FactoryModify.jsp";
 	
 	private ModifyFactoryService modifyService = new ModifyFactoryService();
 
@@ -37,22 +37,27 @@ public class ModifyFactoryHandler implements CommandHandler{
 	}
 
 	private String processForm(HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException {
-		
-		/*
-		 * try { String noVal = req.getParameter("plant_cd"); Factory loadData =
-		 * modifyService.loadData(noVal); User user = (User)
-		 * req.getSession().getAttribute("authUser");
-		 * 
-		 * if(!canModify(user)) { res.sendError(HttpServletResponse.SC_FORBIDDEN);
-		 * return FORM_VIEW; } ModifyFactoryRequest modReq = new
-		 * ModifyFactoryRequest(noVal, loadData.getPlant_nm(),
-		 * loadData.getValid_fr_dt(), loadData.getValid_to_dt(), loadData.getIn_date(),
-		 * loadData.getUp_date()); req.setAttribute("factorydata", loadData);
-		 * req.setAttribute("modReq", modReq); return null; } catch
-		 * (FactoryNotFountException e) {
-		 * res.sendError(HttpServletResponse.SC_NOT_FOUND); return null; }
-		 */
-		return null;
+		  try { 
+		  int noVal = Integer.parseInt(req.getParameter("no")); 
+		  Factory loadData = modifyService.loadData(noVal); 
+		  User user = (User)
+		  req.getSession().getAttribute("authUser");
+		  
+		  if(!canModify(user)) { 
+			  res.sendError(HttpServletResponse.SC_FORBIDDEN);
+			  return FORM_VIEW; 
+		  } 
+		  ModifyFactoryRequest modReq = new ModifyFactoryRequest(noVal, loadData.getPlant_nm(),
+		  loadData.getValid_fr_dt(), loadData.getValid_to_dt(), user.getId(),
+		  loadData.getUp_date()); 
+		  req.setAttribute("factorydata", loadData);
+		  req.setAttribute("modReq", modReq); 
+		  return FORM_VIEW; 
+		  } catch(FactoryNotFountException e) {
+		  res.sendError(HttpServletResponse.SC_NOT_FOUND);
+		  return null;
+		  }
+		 
 	}
 	
 	private boolean canModify(User user) {
@@ -64,11 +69,12 @@ public class ModifyFactoryHandler implements CommandHandler{
 		User user = (User) req.getSession().getAttribute("authUser");
 		int cdVal = Integer.parseInt(req.getParameter("plant_cd"));
 		String nmVal = req.getParameter("plant_nm");
-		Date valid_fr_Val = sdf.parse(req.getParameter("Valid_fr_dt"));
-		Date valid_to_Val = sdf.parse(req.getParameter("Valid_to_dt"));
+		Date valid_fr_Val = sdf.parse(req.getParameter("valid_fr_dt"));
+		Date valid_to_Val = sdf.parse(req.getParameter("valid_to_dt"));
 		String UPUSRVal = user.getId(); //수정자ID
+		Date today = new Date();
 		
-		ModifyFactoryRequest modReq = new ModifyFactoryRequest(cdVal, nmVal, valid_fr_Val, valid_to_Val, UPUSRVal);
+		ModifyFactoryRequest modReq = new ModifyFactoryRequest(cdVal, nmVal, valid_fr_Val, valid_to_Val, UPUSRVal, today);
 		req.setAttribute("modReq", modReq);
 		
 		
