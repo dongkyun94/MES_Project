@@ -238,6 +238,7 @@
 						                    	<th>사용여부</th>
 						                    	<th>등록일</th>
 						                    	<th>수정일</th>
+						                    	<th>삭제</th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tfoot>
@@ -249,6 +250,7 @@
 						                    	<th>사용여부</th>
 						                    	<th>등록일</th>
 						                    	<th>수정일</th>
+						                    	<th>삭제</th>
 	                                        </tr>
 	                                    </tfoot>
 	                                    <tbody>
@@ -261,12 +263,16 @@
 							                    <tr>
 							                    	<td>${line.comp_cd }</td>
 							                    	<td>${line.plant_cd }</td>
-							                    	<td><c:out value="${line.line_cd}"/></td>
+							                    	<td><a href="linemodify.do?no=${line.line_cd }"><c:out value="${line.line_cd}"/></a></td>
 							                    	<td>${line.line_nm }</td>
 							                    	<td>${line.use_yn }</td>
 							                    	<td>${line.in_date }</td>
 							                    	<c:if test="${line.up_date != null}"><td>${line.up_date }</td></c:if>
 							                    	<c:if test="${line.up_date == null}"><td> </td></c:if>
+							                    	<td><a class = "btn btn-danger btn-sm" href="linedelete.do?no=${line.line_cd }" onclick="return confirm('라인코드${line.line_cd}를 삭제하시겠습니까?');"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+												</svg> 삭제</a>
+												</td>
 							                    </tr>
 						                    </c:forEach>
 	                                    </tbody>

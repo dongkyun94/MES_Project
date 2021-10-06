@@ -24,7 +24,7 @@ import order.service.PermissionDeniedException;
 
 public class ModifyLineHandler implements CommandHandler{
 	
-	private static final String FORM_VIEW = "/WEB-INF/view/modifyLineModal.jsp";
+	private static final String FORM_VIEW = "/WEB-INF/view/LineModify.jsp";
 	
 	private ModifyLineService modifyService = new ModifyLineService();
 
@@ -52,9 +52,9 @@ public class ModifyLineHandler implements CommandHandler{
 				return FORM_VIEW;
 			}
 			ModifyLineRequest modReq = new ModifyLineRequest(noVal, loadData.getLine_nm(), loadData.getUse_yn());
-			req.setAttribute("orderdata", loadData);
+			req.setAttribute("linedata", loadData);
 			req.setAttribute("modReq", modReq);
-			return null;
+			return FORM_VIEW;
 		}  catch (LineNotFountException e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;
