@@ -12,7 +12,7 @@ public class DeleteOrderHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String order_no = req.getParameter("order_no");
+		String order_no = req.getParameter("no");
 		deleteOrderService.delete(order_no);
 		return "orderlist.do";
 	}
