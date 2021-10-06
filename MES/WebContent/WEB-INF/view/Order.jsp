@@ -253,118 +253,25 @@
 						                    <tr>
 						                    	<td>${order.comp_cd }</td>
 						                    	<td>${order.plant_cd }</td>
-						                    	<td><a href="#" data-bs-toggle="modal" data-bs-target="#contentModal"><c:out value="${order.order_no}"/></a> <!-- 주문번호 클릭하면 contentModal 활성화 -->
-						                    	<!--contentModal 시작 -->
-						                    	<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel">
-													<div class="modal-dialog modal-xl" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-															<h4 class="modal-title" id="myModalLabel">주문</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-														<div class="modal-body">
-														<!-- 입력 폼: 수정시에 수정 될 내용만 쓰기 활성화 이외에는 마지막에 readonly 태그-->
-														<!-- 수정 모달 버튼을 클릭하면 해당 주문번호의 내용을 담은 모달이 나옵니다-->
-														<!-- 이때 내용은 list서비스에서 페이지에 넘겨주는 List<Order> 객체 order를 통해 입력합니다-->
-														<!-- value 태그 옆 변수들 참고 하세요!-->
-															<form action="ordermodify.do" method="post">
-										                    	<div class="row g-3">
-										                    	<div class="col-sm-12">
-											                    		<label for="order_no" class="form-label">주문번호</label>
-											                        		<input class="form-control" type="text" id="order_no" name="order_no" value="${order.order_no }" readonly>
-											                		</div>
-											                    	<div class="col-sm-6">
-											                    		<label for="comp_cd" class="form-label">회사코드</label>
-											                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${order.comp_cd }" readonly>
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="plant_cd" class="form-label">공장코드</label>
-											                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${order.plant_cd }" readonly>
-											                		</div>
-											                		<div class="col-12">
-											                    		<label for="item_cd" class="form-label">아이템 코드</label>
-											                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${order.item_cd }" readonly>
-											                		</div>
-											                    	<div class="col-sm-6">
-											                    		<label for="order_dt" class="form-label">주문일자</label>
-										                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${order.order_dt }" readonly>
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for=delivery_dt class="form-label">납기일자</label>
-										                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt" value="${order.delivery_dt }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for=order_qty class="form-label">주문수량</label>
-										                        		<input class="form-control" type="text" id="order_qty" name="order_qty" value="${order.order_qty }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="order_status" class="form-label">주문상태</label>
-										                        		<select class="form-control" id="order_status" name="order_status">
-										                            		<option value="초과">초과</option>
-										                            		<option value="납기">납기</option>
-										                            		<option value="미납">미납</option>
-										                        		</select>
-											                		</div>
-											                		<div class="col-12">
-											                    		<label for="remark">비고(특이사항)</label>
-											                    		<div id="provision">
-											                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark" >${order.remark }</textarea>
-											                    		</div>
-											                		</div>
-											                		<div class ="text-center">
-											                			<input type="submit" class = "btn btn-primary" value="수정">
-											                		</div>
-											                    </div>
-										                    </form>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-primary">확인</button>
-															<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-														</div>
-													</div>
-												</div>
-											</div>
-						                    	</td>
-						                    	
+						                    	<!-- 주문번호 클릭하면 modify 페이지로 -->
+						                    	<td><a href="ordermodify.do?no=${order.order_no }"><c:out value="${order.order_no}"/></a></td>
 						                    	<td>${order.order_dt }</td>
 						                    	<td>${order.item_cd }</td>
 						                    	<td>${order.delivery_dt }</td>
 						                    	<td>${order.order_qty }</td>
 						                    	<td>${order.order_status }</td>
-						                    	<!-- 삭제 버튼을 만들었습니다 수정과 마찬가지로 버튼 클릭시 삭제 확인하는 모달페이지를 등장시킵니다. -->
-						                    	<td><a class = "btn btn-danger btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+						                    	<!-- 삭제 버튼-->
+						                    	<td><a class = "btn btn-danger btn-sm" href="orderdelete.do?no=${order.order_no }" onclick="return confirm('주문번호${order.order_no}를 삭제하시겠습니까?');"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 												</svg> 삭제</a>
-												<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
-													<div class="modal-dialog modal-sm" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-															<h4 class="modal-title" id="myModalLabel">주문삭제</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-														<div class="modal-body">
-														주문번호 ${order.order_no }을 삭제 하시겠습니까?
-														</div>
-															<div class="modal-footer">
-																<!-- 모달창에서 삭제 버튼을 클릭하면 해당 주문번호 데이터를 삭제 합니다. -->
-																<button type="button" class="btn btn-primary" onclick="location.href='orderdelete.do?order_no=${order.order_no}'">확인</button>
-																<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-															</div>
-														</div>
-													</div>
-												</div>
 												</td>
-												
-												
 						                    </tr>
 					                    </c:forEach>
-					                    
                                     </tbody>
                                 </table>
-                                
                      	</div>
                      </div>
-                    </div>
+                   </div>
                     
                     <!-- 컨테이너 영역 끝 -->
                     

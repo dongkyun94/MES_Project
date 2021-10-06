@@ -20,7 +20,7 @@ import order.service.PermissionDeniedException;
 
 public class ModifyOrderHandler implements CommandHandler{
 	
-	private static final String FORM_VIEW = "/WEB-INF/view/modifyOrderModal.jsp";
+	private static final String FORM_VIEW = "/WEB-INF/view/OrderModify.jsp";
 	
 	private ModifyOrderService modifyService = new ModifyOrderService();
 
@@ -50,10 +50,10 @@ public class ModifyOrderHandler implements CommandHandler{
 			ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, loadData.getOrder_status(), loadData.getDelivery_dt(), loadData.getOrder_qty(), loadData.getRemark());
 			req.setAttribute("orderdata", loadData);
 			req.setAttribute("modReq", modReq);
-			return null;
+			return FORM_VIEW;
 		}  catch (OrderNotFountException e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			return FORM_VIEW;
 		}
 	}
 	
