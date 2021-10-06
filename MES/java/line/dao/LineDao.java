@@ -128,4 +128,23 @@ public class LineDao {
 	 * Date(timestamp.getTime()); } else { return null; } }
 	 */
 
+	/* 주문 수정 기능*/
+	public int update(Connection conn, String line_cd, String line_nm,String use_yn) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("update LINE set line_nm = ?, use_yn = ? where line_cd = ?")) {
+			pstmt.setString(1, line_nm);
+			pstmt.setString(2, use_yn);
+			pstmt.setString(3, line_cd);
+			return pstmt.executeUpdate();
+		}
+	}
+	/* 주문 삭제 기능 */
+	public int delete(Connection conn, String line_cd) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("delete from LINE where line_cd = ?")) {
+			pstmt.setString(1, line_cd);
+			return pstmt.executeUpdate();
+		}
+	}
+
 }
