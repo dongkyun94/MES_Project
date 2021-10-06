@@ -13,7 +13,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -57,10 +57,11 @@
                             <a class="nav-link" href="/MES">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
+                                
                             </a>
                             <div class="sb-sidenav-menu-heading">주 메뉴</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#basicDataLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 기초데이터관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -72,24 +73,46 @@
                                     <a class="nav-link" href="#">품목관리</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-industry"></i></div>
-                                생산관리
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                주문관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="orderlist.do">주문</a>
+                                    <a class="nav-link" href="orderinsert.do">주문입력</a>
+                                    <a class="nav-link" href="orderlist.do">주문조회</a>
                                 </nav>
-                            </div> 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#equipLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
-                                설비알람 설정
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Pages
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="equipLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="eqmasterlist.do">마스터테이블관리</a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="login.do">Login</a>
+                                            <a class="nav-link" href="join.do">Register</a>
+                                            <a class="nav-link" href="changePwd.do">Forgot Password</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Error
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="401.html">401 Page</a>
+                                            <a class="nav-link" href="404.html">404 Page</a>
+                                            <a class="nav-link" href="500.html">500 Page</a>
+                                        </nav>
+                                    </div>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
@@ -137,12 +160,12 @@
 							<div class="modal-dialog modal-xl" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">주문 입력</h4>
+										<h4 class="modal-title" id="myModalLabel">공장 입력</h4>
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
 									<!-- 입력 폼-->
-										<form action="orderinsert.do" method="post">
+										<form action="factoryinsert.do" method="post">
 					                    	<div class="row g-3">
 						                    	<div class="col-sm-6">
 						                    		<label for="comp_cd" class="form-label">회사코드</label>
@@ -152,39 +175,24 @@
 						                        		</select>
 						                		</div>
 						                		<div class="col-sm-6">
-						                    		<label for="plant_cd" class="form-label">공장코드</label>
-						                        		<select class="form-control" id="plant_cd" name="plant_cd">
-						                            		<option value="1000">1000</option>
-						                            		<option value="1001">1001</option>
-						                        		</select>
+						                    		<label for=plant_cd class="form-label">공장코드</label>
+					                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd">
 						                		</div>
 						                		<div class="col-12">
-						                    		<label for="item_cd" class="form-label">아이템 코드</label>
-						                        		<select class="form-control" id="item_cd" name="item_cd">
-						                            		<option value="103">103</option>
-						                            		<option value="104">104</option>
-						                            		<option value="105">105</option>
-						                        		</select>
+						                    		<label for=plant_nm class="form-label">공장명</label>
+					                        		<input class="form-control" type="text" id="plant_nm" name="plant_nm">
 						                		</div>
 						                    	<div class="col-sm-6">
-						                    		<label for="order_dt" class="form-label">주문일자</label>
-					                        		<input class="form-control" type="date" id="order_dt" name="order_dt">
+						                    		<label for="valid_fr_dt" class="form-label">유효시작일</label>
+					                        		<input class="form-control" type="date" id="valid_fr_dt" name="valid_fr_dt">
 						                		</div>
 						                		<div class="col-sm-6">
-						                    		<label for=delivery_dt class="form-label">납기일자</label>
-					                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt">
+						                    		<label for=valid_to_dt class="form-label">유효종료일</label>
+					                        		<input class="form-control" type="date" id="valid_to_dt" name="valid_to_dt">
 						                		</div>
 						                		<div class="col-sm-6">
-						                    		<label for=order_qyt class="form-label">주문수량</label>
-					                        		<input class="form-control" type="text" id="order_qyt" name="order_qyt">
-						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for="order_status" class="form-label">주문상태</label>
-					                        		<select class="form-control" id="order_status" name="order_status">
-					                            		<option value="초과">초과</option>
-					                            		<option value="납기">납기</option>
-					                            		<option value="미납">미납</option>
-					                        		</select>
+						                    		<label for=in_date class="form-label">등록일</label>
+					                        		<input class="form-control" type="date" id="in_date" name="in_date">
 						                		</div>
 						                		<div class="col-12">
 						                    		<label for="remark">비고(특이사항)</label>
@@ -211,7 +219,7 @@
                     <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                주문목록
+                                공장목록
                             </div>
                             
                     	<div class="card-body">
@@ -220,154 +228,48 @@
                                         <tr>
                                             <th>회사코드</th>
 		                    				<th>공장코드</th>
-					                    	<th>주문번호</th>
-					                    	<th>주문일자</th>
-					                    	<th>아이템코드</th>
-					                    	<th>납기일</th>
-					                    	<th>주문수량</th>
-					                    	<th>주문상태</th>
-					                    	<th>삭제</th>
+					                    	<th>공장명</th>
+					                    	<th>유효시작일</th>
+					                    	<th>유효종료일</th>
+					                    	<th>등록일</th>
+					                    	<th>수정일</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>회사코드</th>
 		                    				<th>공장코드</th>
-					                    	<th>주문번호</th>
-					                    	<th>주문일자</th>
-					                    	<th>아이템코드</th>
-					                    	<th>납기일</th>
-					                    	<th>주문수량</th>
-					                    	<th>주문상태</th>
-					                    	<th>삭제</th>
+					                    	<th>공장명</th>
+					                    	<th>유효시작일</th>
+					                    	<th>유효종료일</th>
+					                    	<th>등록일</th>
+					                    	<th>수정일</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                    	<c:if test="${orderPage.hasNoOrders() }">
 					                    <tr>
-					                    	<td>입력된 주문이 없습니다.</td>
+					                    	<td>입력된 공장이 없습니다.</td>
 					                    </tr>
 					                    </c:if>
 					                    
-					                    <c:forEach var="order" items ="${orderPage.content }">
+					                    <c:forEach var="factory" items ="${factoryPage.content }">
 						                    <tr>
-						                    	<td>${order.comp_cd }</td>
-						                    	<td>${order.plant_cd }</td>
-						                    	<td><a href="#" data-bs-toggle="modal" data-bs-target="#contentModal"><c:out value="${order.order_no}"/></a> <!-- 주문번호 클릭하면 contentModal 활성화 -->
-						                    	<!--contentModal 시작 -->
-						                    	<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel">
-													<div class="modal-dialog modal-xl" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-															<h4 class="modal-title" id="myModalLabel">주문</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-														<div class="modal-body">
-														<!-- 입력 폼: 수정시에 수정 될 내용만 쓰기 활성화 이외에는 마지막에 readonly 태그-->
-														<!-- 수정 모달 버튼을 클릭하면 해당 주문번호의 내용을 담은 모달이 나옵니다-->
-														<!-- 이때 내용은 list서비스에서 페이지에 넘겨주는 List<Order> 객체 order를 통해 입력합니다-->
-														<!-- value 태그 옆 변수들 참고 하세요!-->
-															<form action="ordermodify.do" method="post">
-										                    	<div class="row g-3">
-										                    	<div class="col-sm-12">
-											                    		<label for="order_no" class="form-label">주문번호</label>
-											                        		<input class="form-control" type="text" id="order_no" name="order_no" value="${order.order_no }" readonly>
-											                		</div>
-											                    	<div class="col-sm-6">
-											                    		<label for="comp_cd" class="form-label">회사코드</label>
-											                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${order.comp_cd }" readonly>
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="plant_cd" class="form-label">공장코드</label>
-											                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${order.plant_cd }" readonly>
-											                		</div>
-											                		<div class="col-12">
-											                    		<label for="item_cd" class="form-label">아이템 코드</label>
-											                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${order.item_cd }" readonly>
-											                		</div>
-											                    	<div class="col-sm-6">
-											                    		<label for="order_dt" class="form-label">주문일자</label>
-										                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${order.order_dt }" readonly>
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for=delivery_dt class="form-label">납기일자</label>
-										                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt" value="${order.delivery_dt }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for=order_qty class="form-label">주문수량</label>
-										                        		<input class="form-control" type="text" id="order_qty" name="order_qty" value="${order.order_qty }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="order_status" class="form-label">주문상태</label>
-										                        		<select class="form-control" id="order_status" name="order_status">
-										                            		<option value="초과">초과</option>
-										                            		<option value="납기">납기</option>
-										                            		<option value="미납">미납</option>
-										                        		</select>
-											                		</div>
-											                		<div class="col-12">
-											                    		<label for="remark">비고(특이사항)</label>
-											                    		<div id="provision">
-											                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark" >${order.remark }</textarea>
-											                    		</div>
-											                		</div>
-											                		<div class ="text-center">
-											                			<input type="submit" class = "btn btn-primary" value="수정">
-											                		</div>
-											                    </div>
-										                    </form>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-primary">확인</button>
-															<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-														</div>
-													</div>
-												</div>
-											</div>
-						                    	</td>
-						                    	
-						                    	<td>${order.order_dt }</td>
-						                    	<td>${order.item_cd }</td>
-						                    	<td>${order.delivery_dt }</td>
-						                    	<td>${order.order_qty }</td>
-						                    	<td>${order.order_status }</td>
-						                    	<!-- 삭제 버튼을 만들었습니다 수정과 마찬가지로 버튼 클릭시 삭제 확인하는 모달페이지를 등장시킵니다. -->
-						                    	<td><a class = "btn btn-danger btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-												</svg> 삭제</a>
-												<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
-													<div class="modal-dialog modal-sm" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-															<h4 class="modal-title" id="myModalLabel">주문삭제</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-														<div class="modal-body">
-														주문번호 ${order.order_no }을 삭제 하시겠습니까?
-														</div>
-															<div class="modal-footer">
-																<!-- 모달창에서 삭제 버튼을 클릭하면 해당 주문번호 데이터를 삭제 합니다. -->
-																<button type="button" class="btn btn-primary" onclick="location.href='orderdelete.do?order_no=${order.order_no}'">확인</button>
-																<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-															</div>
-														</div>
-													</div>
-												</div>
-												</td>
-												
-												
+						                    	<td>${factory.comp_cd }</td>
+						                    	<td><a href="orderdetail.do?no=${factory.plant_cd}&pageNo=${factoryPage.currentPage}"><c:out value="${factory.plant_cd}"/></a></td>
+						                    	<td>${factory.plant_nm }</td>
+						                    	<td>${factory.valid_fr_dt }</td>
+						                    	<td>${factory.valid_to_dt }</td>
+						                    	<td>${factory.in_date }</td>
+						                    	<c:if test="${line.up_date != null}"><td>${line.up_date }</td></c:if>
+							                    <c:if test="${line.up_date == null}"><td> </td></c:if>
 						                    </tr>
 					                    </c:forEach>
-					                    
                                     </tbody>
                                 </table>
-                                
                      	</div>
                      </div>
                     </div>
-                    
-                    <!-- 컨테이너 영역 끝 -->
-                    
                    <%--  <div class = "text-center">
                     	<ul class="pagination">
                     		
@@ -403,8 +305,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <!-- <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script> -->
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
