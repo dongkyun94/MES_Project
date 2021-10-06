@@ -12,7 +12,7 @@ public class DeleteFactoryHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		int plant_cd = Integer.parseInt(req.getParameter("plant_cd")) ;
+		int plant_cd = Integer.parseInt(req.getParameter("no")) ;
 		deleteFactoryService.delete(plant_cd);
 		return "factorylist.do";
 	}
