@@ -233,6 +233,7 @@
 					                    	<th>유효종료일</th>
 					                    	<th>등록일</th>
 					                    	<th>수정일</th>
+					                    	<th>삭제</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -244,10 +245,11 @@
 					                    	<th>유효종료일</th>
 					                    	<th>등록일</th>
 					                    	<th>수정일</th>
+					                    	<th>삭제</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                   	<c:if test="${orderPage.hasNoOrders() }">
+                                   	<c:if test="${factoryPage.hasNoFactorys() }">
 					                    <tr>
 					                    	<td>입력된 공장이 없습니다.</td>
 					                    </tr>
@@ -256,13 +258,17 @@
 					                    <c:forEach var="factory" items ="${factoryPage.content }">
 						                    <tr>
 						                    	<td>${factory.comp_cd }</td>
-						                    	<td><a href="orderdetail.do?no=${factory.plant_cd}&pageNo=${factoryPage.currentPage}"><c:out value="${factory.plant_cd}"/></a></td>
+						                    	<td><a href="factorymodify.do?no=${factory.plant_cd}"><c:out value="${factory.plant_cd}"/></a></td>
 						                    	<td>${factory.plant_nm }</td>
 						                    	<td>${factory.valid_fr_dt }</td>
 						                    	<td>${factory.valid_to_dt }</td>
 						                    	<td>${factory.in_date }</td>
-						                    	<c:if test="${line.up_date != null}"><td>${line.up_date }</td></c:if>
-							                    <c:if test="${line.up_date == null}"><td> </td></c:if>
+						                    	<c:if test="${factory.up_date != null}"><td>${factory.up_date }</td></c:if>
+							                    <c:if test="${factory.up_date == null}"><td> </td></c:if>
+							                    <td><a class = "btn btn-danger btn-sm" href="factorydelete.do?no=${factory.plant_cd }" onclick="return confirm('공장코드${factory.plant_cd}를 삭제하시겠습니까?');"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+												</svg> 삭제</a>
+												</td>
 						                    </tr>
 					                    </c:forEach>
                                     </tbody>
@@ -270,23 +276,6 @@
                      	</div>
                      </div>
                     </div>
-                   <%--  <div class = "text-center">
-                    	<ul class="pagination">
-                    		
-                    		<c:if test = "${orderPage.startPage > 5 }">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage-5 }">이전</a></li>
-                    		</c:if>
-                    		
-                    		
-                    		<c:forEach var = "pNo" begin="${orderPage.startPage }" end = "${orderPage.endPage }">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${pNo }">${pNo}</a></li>
-                    		</c:forEach>
-                    		
-                    		<c:if test="${orderPage.endPage < orderPage.totalPages}">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage+5 }">[다음]</a></li>
-                    		</c:if>
-                    	</ul>
-                    </div> --%>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
