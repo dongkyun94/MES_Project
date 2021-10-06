@@ -22,7 +22,7 @@ public class ItemDao {
 			pstmt = conn.prepareStatement("insert into item"
 					+ " (comp_cd, plant_cd, acct_id, item_cd, item_nm, item_spec, item_spec2, item_color, cust_cd, acct_price, currency,"
 					+ " unit_cd, remark, in_usr_id, in_date)"
-					+ " values (?, ?, ?, ?, ?, ?)");
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, item.getComp_cd());
 			pstmt.setInt(2, item.getPlant_cd());
 			pstmt.setString(3, item.getAcct_id());
@@ -57,7 +57,8 @@ public class ItemDao {
 	private Timestamp toTimestamp(Date date) {
 		return new Timestamp(date.getTime());
 	}
-	
+
+	/* DB에 담긴 데이터 수 조회 */
 	public int selectCount(Connection conn) throws SQLException {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -73,7 +74,8 @@ public class ItemDao {
 			JdbcUtil.close(stmt);
 		}
 	}
-	
+
+	/* DB전체 조회 후, List에 담기 */
 	public List<Item> select (Connection conn, int startRow, int size) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -94,7 +96,8 @@ public class ItemDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
-	
+
+	/* DB에서 조회한 내용을 model 객체로 변환 */
 	private Item convertItem(ResultSet rs) throws SQLException{
 		return new Item(rs.getInt("comp_cd"),
 				rs.getInt("plant_cd"),
@@ -113,9 +116,29 @@ public class ItemDao {
 				rs.getDate("in_date"),
 				rs.getString("up_usr_id"),
 				rs.getDate("up_date")
-				)
-				;
+				);
 			
+	}
+	
+	/* 수정 기능 */
+	public int update(Connection conn, String order_no, String order_status , Date delivery_dt, int order_qty, String remark) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("update ordering set order_status = ?, delivery_dt = ?, order_qty = ?, remark = ? where order_no = ?")) {
+			pstmt.setString(1, order_status);
+			pstmt.setTimestamp(2, toTimestamp(delivery_dt));
+			pstmt.setInt(3, order_qty);
+			pstmt.setString(4, remark);
+			pstmt.setString(5, order_no);
+			return pstmt.executeUpdate();
+		}
+	}
+	/* 삭제 기능 */
+	public int delete(Connection conn, String item_cd) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("delete from item where item_cd = ?")) {
+			pstmt.setString(1, item_cd);
+			return pstmt.executeUpdate();
+		}
 	}
 
 }
