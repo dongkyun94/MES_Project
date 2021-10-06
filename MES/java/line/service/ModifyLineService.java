@@ -49,7 +49,8 @@ public class ModifyLineService {
 			if(!canModify()) {
 				throw new PermissionDeniedException();
 			}
-			lineDao.update(conn, modReq.getLine_cd(), modReq.getLine_nm(), modReq.getUse_yn());
+			lineDao.update(conn, modReq.getLine_cd(), modReq.getLine_nm(), modReq.getUse_yn(), modReq.getRemark(),
+					modReq.getUp_usr_id(), modReq.getUp_date());
 			conn.commit();
 		} catch (SQLException e) {
 			JdbcUtil.rollback(conn);

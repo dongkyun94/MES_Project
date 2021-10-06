@@ -60,58 +60,36 @@
                             </a>
                             <div class="sb-sidenav-menu-heading">주 메뉴</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#basicDataLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 기초데이터관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="basicDataLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">공장관리</a>
+                                    <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="#">품목관리</a>
+                                    <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                주문관리
+                            <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-industry"></i></div>
+                                생산관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="orderinsert.do">주문입력</a>
-                                    <a class="nav-link" href="orderlist.do">주문조회</a>
+                                    <a class="nav-link" href="orderlist.do">주문</a>
                                 </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Pages
+                            </div> 
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#equipLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
+                                설비알람 설정
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.do">Login</a>
-                                            <a class="nav-link" href="join.do">Register</a>
-                                            <a class="nav-link" href="changePwd.do">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
+                            <div class="collapse" id="equipLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="eqmasterlist.do">마스터테이블관리</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
@@ -165,55 +143,47 @@
 									<div class="modal-body">
 									<!-- 입력 폼 -->
 										<form action="lineinsert.do" method="post">
-					                    	<div class="form-group">
-					                    		<label for="comp_cd" class="col-lg-2 control-label">회사코드</label>
-					                    		<div class="col-lg-10">
-					                        		<select class="form-control" id="comp_cd" name="comp_cd">
-					                            		<option value="1">1</option>
-					                            		<option value="2">2</option>
-					                        		</select>
-					                    		</div>
+					                    	<div class="row g-3">
+					                    		<div class="col-sm-12">
+						                    		<label for="comp_cd" class="form-label">회사코드</label>
+						                        	<select class="form-control" id="comp_cd" name="comp_cd">
+						                            	<option value="1">1</option>
+						                            	<option value="2">2</option>
+						                        	</select>
+						                    	</div>
+					                		<div class="col-sm-12">
+					                    		<label for="plant_cd" class="form-label">공장코드</label>
+					                        	<select class="form-control"	 id="plant_cd" name="plant_cd">
+					                            	<option value="1000">1000</option>
+					                            	<option value="1001">1001</option>
+					                        	</select>
 					                		</div>
-					                		<div>
-					                    		<label for="plant_cd">공장코드</label>
-					                    		<div>
-					                        		<select id="plant_cd" name="plant_cd">
-					                            		<option value="1000">1000</option>
-					                            		<option value="1001">1001</option>
-					                        		</select>
-					                    		</div>
+					                		<div class="col-sm-12">
+					                    		<label for="line_cd" class="form-label">라인 코드</label>
+					                        	<input class="form-control" type="text" id="line_cd" name="line_cd">
 					                		</div>
-					                		<div>
-					                    		<label for="line_cd">라인 코드</label>
-					                    		<div>
-					                        		<input type="text" id="line_cd" name="line_cd">
-					                    		</div>
+					                    	<div class="col-sm-12">
+					                    		<label for="line_nm" class="form-label">라인명</label>
+				                        		<input class="form-control" type="text" id="line_nm" name="line_nm">
 					                		</div>
-					                    	<div>
-					                    		<label for="line_nm">라인명</label>
-					                    		<div>
-					                        		<input type="text" id="line_nm" name="line_nm">
-					                    		</div>
+					                		<div class="col-sm-12">
+					                    		<label for="use_yn" class="form-label">사용여부</label>
+				                        		<select class="form-control" id="use_yn" name="use_yn">
+				                            		<option value="Y" selected="selected">사용</option>
+				                            		<option value="N">미사용</option>
+				                        		</select>
 					                		</div>
-					                		<div>
-					                    		<label for="use_yn">사용여부</label>
-					                    		<div>
-					                        		<select id="use_yn" name="use_yn">
-					                            		<option value="Y" selected="selected">사용</option>
-					                            		<option value="N">미사용</option>
-					                        		</select>
-					                    		</div>
-					                		</div>
-					                		<div>
-					                    		<label for=in_date class="col-lg-2 control-label">등록일</label>
-					                    		<div>
-					                        		<input type="date" id="in_date" name="in_date">
-					                    		</div>
-					                		</div>
+					                		<div class="col-12">
+						                    	<label for="remark" class="form-label">비고(특이사항)</label>
+						                    		<div id="provision">
+						                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark"></textarea>
+						                    		</div>
+						                	</div>
 					                		<div class ="text-center">
 					                			<input type="submit" class = "btn btn-primary" value="등록">
 					                		</div>
-					                    </form>
+					                	</div>
+					                  </form>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
@@ -269,7 +239,7 @@
 							                    	<td>${line.in_date }</td>
 							                    	<c:if test="${line.up_date != null}"><td>${line.up_date }</td></c:if>
 							                    	<c:if test="${line.up_date == null}"><td> </td></c:if>
-							                    	<td><a class = "btn btn-danger btn-sm" href="linedelete.do?no=${line.line_cd }" onclick="return confirm('라인코드${line.line_cd}를 삭제하시겠습니까?');"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+							                    	<td><a class = "btn btn-danger btn-sm" href="linedelete.do?no=${line.line_cd }" onclick="return confirm('라인코드 ${line.line_cd}를 삭제하시겠습니까?');"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 												</svg> 삭제</a>
 												</td>

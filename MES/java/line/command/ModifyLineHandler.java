@@ -2,7 +2,6 @@ package line.command;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +15,6 @@ import line.service.LineNotFountException;
 import line.service.ModifyLineRequest;
 import line.service.ModifyLineService;
 import member.command.CommandHandler;
-import order.model.Order;
-import order.service.ModifyOrderRequest;
-import order.service.ModifyOrderService;
-import order.service.OrderNotFountException;
 import order.service.PermissionDeniedException;
 
 public class ModifyLineHandler implements CommandHandler{
@@ -51,7 +46,8 @@ public class ModifyLineHandler implements CommandHandler{
 				res.sendError(HttpServletResponse.SC_FORBIDDEN);
 				return FORM_VIEW;
 			}
-			ModifyLineRequest modReq = new ModifyLineRequest(noVal, loadData.getLine_nm(), loadData.getUse_yn());
+			ModifyLineRequest modReq = new ModifyLineRequest(noVal, loadData.getLine_nm(), loadData.getUse_yn(),
+					loadData.getRemark(), loadData.getUp_usr_id(), loadData.getUp_date());
 			req.setAttribute("linedata", loadData);
 			req.setAttribute("modReq", modReq);
 			return FORM_VIEW;
@@ -66,13 +62,15 @@ public class ModifyLineHandler implements CommandHandler{
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws Exception{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		User user = (User) req.getSession().getAttribute("authUser");
 		String noVal = req.getParameter("line_cd");
 		String nmVal = req.getParameter("line_nm");
 		String ynVal = req.getParameter("use_yn");
+		String remarkVal = req.getParameter("remark");
+		String id = user.getId();
+		Date today = new Date();
 		
-		ModifyLineRequest modReq = new ModifyLineRequest(noVal, nmVal, ynVal);
+		ModifyLineRequest modReq = new ModifyLineRequest(noVal, nmVal, ynVal, remarkVal, id, today);
 		req.setAttribute("modReq", modReq);
 		
 		

@@ -69,7 +69,7 @@
                                     <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="#">품목관리</a>
+                                    <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -124,11 +124,15 @@
                         </ol>
                         </c:if>
                         <hr />
-                        <form action="ordermodify.do" method="post">
+                        <form action="linemodify.do" method="post">
 							<div class="row g-3">
-								<div class="col-sm-12">
+								<div class="col-sm-6">
 									<label for="comp_cd" class="form-label">회사코드</label>
 							    		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${linedata.comp_cd }" readonly>
+								</div>
+								<div class="col-sm-6">
+								   	<label for="in_date" class="form-label">등록일</label>
+									   	<input class="form-control" type="date" id="in_date" name="in_date" value="${linedata.in_date }" readonly>
 								</div>
 								   <div class="col-sm-12">
 								   	<label for="plant_cd" class="form-label">공장코드</label>
@@ -142,17 +146,19 @@
 								   	<label for="line_nm" class="form-label">라인명</label>
 								    		<input class="form-control" type="text" id="line_nm" name="line_nm" value="${linedata.line_nm }" >
 								</div>
-								   <div class="col-sm-12">
-								   	<label for="use_yn" class="form-label">사용여부</label>
-									   	<select class="form-control" id="use_yn" name="use_yn">
-									    		<option value="사용">사용</option>
-									    		<option value="미사용">미사용</option>
-									   	</select>
-								</div>
 								<div class="col-sm-12">
-								   	<label for="in_date" class="form-label">등록일</label>
-									   	<input class="form-control" type="date" id="in_date" name="in_date" value="${linedata.in_date }">
+								   	<label for="use_yn" class="form-label">사용여부</label>
+									<select class="form-control" id="use_yn" name="use_yn">
+									    <option value="Y">사용</option>
+										<option value="N">미사용</option>
+									</select>
 								</div>
+								<div class="col-12">
+							        <label for="remark">비고(특이사항)</label>
+							        <div id="provision">
+							        	<textarea class="form-control" rows="8" style="resize:none" name ="remark">${linedata.remark }</textarea>
+							        </div>
+						        </div>
 								<div class ="text-center">
 									<input type="submit" class = "btn btn-primary" value="수정">
 								</div>

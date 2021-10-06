@@ -69,7 +69,7 @@
                                     <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="#">품목관리</a>
+                                    <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -183,7 +183,7 @@
 					                        		<select class="form-control" id="order_status" name="order_status">
 					                            		<option value="초과">초과</option>
 					                            		<option value="납기">납기</option>
-					                            		<option value="미납">미납</option>
+					                            		<option value="미납" selected>미납</option>
 					                        		</select>
 						                		</div>
 						                		<div class="col-12">
@@ -201,7 +201,6 @@
 					                    </form>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary">확인</button>
 										<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
 									</div>
 								</div>

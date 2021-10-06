@@ -23,14 +23,16 @@ public class LineDao {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("insert into line"
-					+ " (comp_cd, plant_cd, line_cd, line_nm, use_yn, in_date)"
-					+ " values (?, ?, ?, ?, ?, ?)");
+					+ " (comp_cd, plant_cd, line_cd, line_nm, use_yn, remark, in_usr_id, in_date)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, line.getComp_cd());
 			pstmt.setInt(2, line.getPlant_cd());
 			pstmt.setString(3, line.getLine_cd());
 			pstmt.setString(4, line.getLine_nm());
 			pstmt.setString(5, line.getUse_yn());
-			pstmt.setTimestamp(6, toTimestamp(line.getIn_date()));
+			pstmt.setString(6, line.getRemark());
+			pstmt.setString(7, line.getIn_usr_id());
+			pstmt.setTimestamp(8, toTimestamp(line.getIn_date()));
 			int insertedCount = pstmt.executeUpdate();
 			
 			if(insertedCount > 0) {
@@ -109,16 +111,18 @@ public class LineDao {
 		}
 	}
 
-	/*DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드*/
+	/*DB 에서 조회한 Line 를 Line 객체로 변환하는 메소드*/
 	private Line convertLine(ResultSet rs) throws SQLException{
 		return new Line(rs.getInt("comp_cd"),
 				rs.getInt("plant_cd"),
 				rs.getString("line_cd"),
 				rs.getString("line_nm"),
 				rs.getString("use_yn"),
+				rs.getString("remark"),
+				rs.getString("in_usr_id"),
 				rs.getDate("in_date"),
+				rs.getString("up_usr_id"),
 				rs.getDate("up_date"));
-			
 	}
 	
 
@@ -128,17 +132,21 @@ public class LineDao {
 	 * Date(timestamp.getTime()); } else { return null; } }
 	 */
 
-	/* 주문 수정 기능*/
-	public int update(Connection conn, String line_cd, String line_nm,String use_yn) throws SQLException {
+	/* 수정 기능*/
+	public int update(Connection conn, String line_cd, String line_nm, 
+			String use_yn, String remark, String up_usr_id, Date up_date) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("update LINE set line_nm = ?, use_yn = ? where line_cd = ?")) {
+				.prepareStatement("update LINE set line_nm = ?, use_yn = ?, remark = ?, up_usr_id = ?, up_date = ? where line_cd = ?")) {
 			pstmt.setString(1, line_nm);
 			pstmt.setString(2, use_yn);
-			pstmt.setString(3, line_cd);
+			pstmt.setString(3, remark);
+			pstmt.setString(4, up_usr_id);
+			pstmt.setTimestamp(5, toTimestamp(up_date));
+			pstmt.setString(6, line_cd);
 			return pstmt.executeUpdate();
 		}
 	}
-	/* 주문 삭제 기능 */
+	/* 삭제 기능 */
 	public int delete(Connection conn, String line_cd) throws SQLException {
 		try (PreparedStatement pstmt = conn
 				.prepareStatement("delete from LINE where line_cd = ?")) {

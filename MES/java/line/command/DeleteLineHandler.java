@@ -12,7 +12,7 @@ public class DeleteLineHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String line_cd = req.getParameter("line_cd");
+		String line_cd = req.getParameter("no");
 		deleteLineService.delete(line_cd);
 		return "linelist.do";
 	}

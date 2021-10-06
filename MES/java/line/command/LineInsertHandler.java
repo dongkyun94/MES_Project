@@ -1,11 +1,13 @@
 package line.command;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import auth.service.User;
 import line.service.LineInsertRequest;
 import line.service.LineInsertService;
 import member.command.CommandHandler;
@@ -48,10 +50,12 @@ public class LineInsertHandler implements CommandHandler {
 	}
 
 	private LineInsertRequest creatLineInsertRequest(HttpServletRequest req) {
+		User user = (User)req.getSession(false).getAttribute("authUser");
+		Date today = new Date();
 		return new LineInsertRequest(
 				Integer.parseInt(req.getParameter("comp_cd")), Integer.parseInt(req.getParameter("plant_cd")), 
-				req.getParameter("line_cd"), req.getParameter("line_nm"), req.getParameter("use_yn"),
-				req.getParameter("in_date"));
+				req.getParameter("line_cd"), req.getParameter("line_nm"), req.getParameter("use_yn"), 
+				req.getParameter("remark"), user.getId(), today);
 	}
 
 
