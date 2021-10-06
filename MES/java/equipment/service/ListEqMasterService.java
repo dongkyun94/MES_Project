@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import equipment.dao.EquipmentDao;
+import equipment.dao.EqMasterDao;
 import equipment.model.EquimentMaster;
 import jdbc.connection.ConnectionProvider;
 
 
 public class ListEqMasterService {
 
-	private EquipmentDao  equipmentDao = new EquipmentDao();
+	private EqMasterDao  equipmentDao = new EqMasterDao();
 	private int size = 10;
 	
 	public EqMasterPage getEquipmentPage(int pageNum) {

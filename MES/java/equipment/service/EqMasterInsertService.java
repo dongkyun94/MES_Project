@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import equipment.dao.EquipmentDao;
+import equipment.dao.EqMasterDao;
 import jdbc.JdbcUtil;
 import jdbc.connection.ConnectionProvider;
 import line.model.Line;
@@ -18,7 +18,7 @@ import equipment.service.EqMasterInsertRequest;
 
 public class EqMasterInsertService {
 
-	private EquipmentDao equipmentDao = new EquipmentDao();
+	private EqMasterDao EqMasterDao = new EqMasterDao();
 	
 	public String insert(EqMasterInsertRequest req) {
 		Connection conn = null;
@@ -27,15 +27,15 @@ public class EqMasterInsertService {
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
-			EquimentMaster equipment = toEquipment(req);
-			EquimentMaster savedEquipment = equipmentDao.insert(conn, equipment);
-			if (savedEquipment == null) {
-				throw new RuntimeException("fail to insert equipment");
+			EquimentMaster eqMaster = toeqMaster(req);
+			EquimentMaster savedEqMaster = EqMasterDao.insert(conn, eqMaster);
+			if (savedEqMaster == null) {
+				throw new RuntimeException("fail to insert EqMaster");
 			}
 			
 			conn.commit();
 			
-			return savedEquipment.getLine_cd();
+			return savedEqMaster.getLine_cd();
 		}catch (SQLException e) {
 			JdbcUtil.rollback(conn);
 			System.out.println(e.getMessage());
@@ -52,7 +52,7 @@ public class EqMasterInsertService {
 		}
 	}
 
-	private static EquimentMaster toEquipment(EqMasterInsertRequest req) throws ParseException{
+	private static EquimentMaster toeqMaster(EqMasterInsertRequest req) throws ParseException{
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		return new EquimentMaster(req.getComp_cd(), req.getPlant_cd(), req.getLine_cd(), req.getequip_cd(), 
 				req.getIndex_cd(), req.getContents(), req.getGrade(), req.getUse_yn(), req.getIn_usr_id(),sdf1.parse( req.getIn_date().toString()), 
