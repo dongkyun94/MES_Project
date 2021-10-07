@@ -14,8 +14,8 @@ import member.command.CommandHandler;
 
 public class EqMasterInsertHandler implements CommandHandler {
 
-	private static final String FORM_VIEW = "/WEB-INF/view/newEquipmentForm.jsp";
-	private EqMasterInsertService equipmentInsertService = new EqMasterInsertService();
+	private static final String FORM_VIEW = "/WEB-INF/view/newEquipMaster.jsp";
+	private EqMasterInsertService equipMasterInsertService = new EqMasterInsertService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -38,15 +38,15 @@ public class EqMasterInsertHandler implements CommandHandler {
 		req.setAttribute("errors", errors);
 		
 		User user = (User)req.getSession(false).getAttribute("authUser");
-		EqMasterInsertRequest equipmentInsertReq = creatEquipmentInsertRequest(req, user);
-		equipmentInsertReq.validate(errors);
+		EqMasterInsertRequest equipMasterInsertReq = creatEquipmentInsertRequest(req, user);
+		equipMasterInsertReq.validate(errors);
 		
 		if(!errors.isEmpty()) {
 			return FORM_VIEW;
 		}
-		String newEquipmentNo = equipmentInsertService.insert(equipmentInsertReq);
+		String newEquipmentNo = equipMasterInsertService.insert(equipMasterInsertReq);
 		req.setAttribute("newEquipmentNo", newEquipmentNo);
-		return "eqmasterlist.do";
+		return "eqMasterlist.do";
 	
 	}
 
