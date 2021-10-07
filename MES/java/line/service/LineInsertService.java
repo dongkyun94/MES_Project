@@ -50,8 +50,9 @@ public class LineInsertService {
 	}
 
 	private Line toLine(LineInsertRequest req) throws ParseException{
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		return new Line(req.getComp_cd(), req.getPlant_cd(), req.getLine_cd(), req.getLine_nm(), req.getUse_yn(), sdf1.parse(req.getIn_date()), null);
+		return new Line(req.getComp_cd(), req.getPlant_cd(), req.getLine_cd(), 
+				req.getLine_nm(), req.getUse_yn(), req.getRemark(), req.getIn_usr_id(),
+				req.getIn_date(), null, null);
 	}
 
 }

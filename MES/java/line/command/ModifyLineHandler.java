@@ -1,8 +1,7 @@
-package order.command;
+package line.command;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,18 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import auth.service.User;
+import line.model.Line;
+import line.service.LineNotFountException;
+import line.service.ModifyLineRequest;
+import line.service.ModifyLineService;
 import member.command.CommandHandler;
-import order.service.ModifyOrderService;
-import order.model.Order;
-import order.service.ModifyOrderRequest;
-import order.service.OrderNotFountException;
 import order.service.PermissionDeniedException;
 
-public class ModifyOrderHandler implements CommandHandler{
+public class ModifyLineHandler implements CommandHandler{
 	
-	private static final String FORM_VIEW = "/WEB-INF/view/OrderModify.jsp";
+	private static final String FORM_VIEW = "/WEB-INF/view/LineModify.jsp";
 	
-	private ModifyOrderService modifyService = new ModifyOrderService();
+	private ModifyLineService modifyService = new ModifyLineService();
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -40,20 +39,21 @@ public class ModifyOrderHandler implements CommandHandler{
 		
 		try {
 			String noVal = req.getParameter("no");
-			Order loadData = modifyService.loadData(noVal);
+			Line loadData = modifyService.loadData(noVal);
 			User user = (User) req.getSession().getAttribute("authUser");
 			
 			if(!canModify(user)) {
 				res.sendError(HttpServletResponse.SC_FORBIDDEN);
 				return FORM_VIEW;
 			}
-			ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, loadData.getOrder_status(), loadData.getDelivery_dt(), loadData.getOrder_qty(), loadData.getRemark());
-			req.setAttribute("orderdata", loadData);
+			ModifyLineRequest modReq = new ModifyLineRequest(noVal, loadData.getLine_nm(), loadData.getUse_yn(),
+					loadData.getRemark(), loadData.getUp_usr_id(), loadData.getUp_date());
+			req.setAttribute("linedata", loadData);
 			req.setAttribute("modReq", modReq);
 			return FORM_VIEW;
-		}  catch (OrderNotFountException e) {
+		}  catch (LineNotFountException e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return FORM_VIEW;
+			return null;
 		}
 	}
 	
@@ -62,16 +62,16 @@ public class ModifyOrderHandler implements CommandHandler{
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws Exception{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		User user = (User) req.getSession().getAttribute("authUser");
-		String noVal = req.getParameter("order_no");
-		String statusVal = req.getParameter("order_status");
-		Date deliveryVal = sdf.parse(req.getParameter("delivery_dt"));
-		int qtyVal = Integer.parseInt(req.getParameter("order_qty"));
+		String noVal = req.getParameter("line_cd");
+		String nmVal = req.getParameter("line_nm");
+		String ynVal = req.getParameter("use_yn");
 		String remarkVal = req.getParameter("remark");
+		String id = user.getId();
+		Date today = new Date();
 		
-		ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, statusVal, deliveryVal, qtyVal, remarkVal);
-		//req.setAttribute("modReq", modReq);
+		ModifyLineRequest modReq = new ModifyLineRequest(noVal, nmVal, ynVal, remarkVal, id, today);
+		req.setAttribute("modReq", modReq);
 		
 		
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();
@@ -81,8 +81,8 @@ public class ModifyOrderHandler implements CommandHandler{
 		}
 		try {
 			modifyService.modify(modReq);
-			return "orderlist.do";
-		} catch (OrderNotFountException e) {
+			return "linelist.do";
+		} catch (LineNotFountException e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		} catch (PermissionDeniedException e) {

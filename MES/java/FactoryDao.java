@@ -1,4 +1,3 @@
-package factory.dao;
 
 
 import java.sql.Connection;
@@ -134,10 +133,10 @@ public class FactoryDao {
 		return new Date(timestamp.getTime());
 	}
 	
-	/* 수정 기능 */
+	/* 주문  수정 기능 */
 	public int update(Connection conn, int plant_cd, String plant_nm , Date valid_fr_dt, Date valid_to_dt, String up_usr_id) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("update factory set plant_nm = ?, valid_fr_dt = ?, valid_to_dt = ?, up_usr_id = ? where PLANT_CD = ?")) {
+				.prepareStatement("update factorying set plant_nm = ?, valid_fr_dt = ?, valid_to_dt = ?, up_usr_id = ? where PLANT_CD = ?")) {
 			pstmt.setString(1, plant_nm);
 			pstmt.setTimestamp(2, toTimestamp(valid_fr_dt));
 			pstmt.setTimestamp(3, toTimestamp(valid_to_dt));
@@ -149,7 +148,7 @@ public class FactoryDao {
 	/* 주문 삭제 기능 */
 	public int delete(Connection conn, int plant_cd) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("delete from factory where plant_cd = ?")) {
+				.prepareStatement("delete from factorying where plant_cd = ?")) {
 			pstmt.setInt(1, plant_cd);
 			return pstmt.executeUpdate();
 		}

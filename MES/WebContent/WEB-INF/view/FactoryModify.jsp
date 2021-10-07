@@ -13,7 +13,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -69,7 +69,7 @@
                                     <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="itemlist.do">품목관리</a>
+                                    <a class="nav-link" href="#">품목관리</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -112,7 +112,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">라인관리</h1>
+                        <h1 class="mt-4">공장 상세</h1>
                         <c:if test="${! empty authUser }">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">${authUser.name }님, 안녕하세요</li>
@@ -120,152 +120,47 @@
                         </c:if>
                         <c:if test="${ empty authUser }">
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">주문관리</li>
+                            <li class="breadcrumb-item active">공장 상세</li>
                         </ol>
                         </c:if>
                         <hr />
-                        <!-- 모달을 열기 위한 버튼 -->
-                        <div class="row mb-2">
-                        	<div class="col">
-	                        	<button type="button" class="btn btn-primary btn-md float-end" data-bs-toggle="modal" data-bs-target="#myModal">
-									입력
-								</button>
-							</div>
-						</div>
-						<!-- 모달 영역 -->
-						<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel">
-							<div class="modal-dialog modal-xl" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">라인 입력</h4>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-									<!-- 입력 폼 -->
-										<form action="lineinsert.do" method="post">
-					                    	<div class="row g-3">
-					                    		<div class="col-sm-12">
-						                    		<label for="comp_cd" class="form-label">회사코드</label>
-						                        	<select class="form-control" id="comp_cd" name="comp_cd">
-						                            	<option value="1">1</option>
-						                            	<option value="2">2</option>
-						                        	</select>
-						                    	</div>
-					                		<div class="col-sm-12">
-					                    		<label for="plant_cd" class="form-label">공장코드</label>
-					                        	<select class="form-control"	 id="plant_cd" name="plant_cd">
-					                            	<option value="1000">1000</option>
-					                            	<option value="1001">1001</option>
-					                        	</select>
-					                		</div>
-					                		<div class="col-sm-12">
-					                    		<label for="line_cd" class="form-label">라인 코드</label>
-					                        	<input class="form-control" type="text" id="line_cd" name="line_cd">
-					                		</div>
-					                    	<div class="col-sm-12">
-					                    		<label for="line_nm" class="form-label">라인명</label>
-				                        		<input class="form-control" type="text" id="line_nm" name="line_nm">
-					                		</div>
-					                		<div class="col-sm-12">
-					                    		<label for="use_yn" class="form-label">사용여부</label>
-				                        		<select class="form-control" id="use_yn" name="use_yn">
-				                            		<option value="Y" selected="selected">사용</option>
-				                            		<option value="N">미사용</option>
-				                        		</select>
-					                		</div>
-					                		<div class="col-12">
-						                    	<label for="remark" class="form-label">비고(특이사항)</label>
-						                    		<div id="provision">
-						                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark"></textarea>
-						                    		</div>
-						                	</div>
-					                		<div class ="text-center">
-					                			<input type="submit" class = "btn btn-primary" value="등록">
-					                		</div>
-					                	</div>
-					                  </form>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-									</div>
+                        <form action="factorymodify.do" method="post">
+					    	<div class="row g-3">
+						    	<div class="col-sm-6">
+						    		<label for="comp_cd" class="form-label">회사코드</label>
+						    		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${factorydata.comp_cd }" readonly>
 								</div>
-							</div>
-						</div>
-                     <!-- 데이터 테이블 영역 -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                라인목록
-                            </div>
-	                    	<div class="card-body">
-	                                <table id="datatablesSimple">
-	                                    <thead>
-	                                        <tr>
-	                                            <th>회사코드</th>
-			                    				<th>공장코드</th>
-						                    	<th>라인코드</th>
-						                    	<th>라인명</th>
-						                    	<th>사용여부</th>
-						                    	<th>등록일</th>
-						                    	<th>수정일</th>
-						                    	<th>삭제</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tfoot>
-	                                        <tr>
-	                                            <th>회사코드</th>
-			                    				<th>공장코드</th>
-						                    	<th>라인코드</th>
-						                    	<th>라인명</th>
-						                    	<th>사용여부</th>
-						                    	<th>등록일</th>
-						                    	<th>수정일</th>
-						                    	<th>삭제</th>
-	                                        </tr>
-	                                    </tfoot>
-	                                    <tbody>
-		                                   	<c:if test="${linePage.hasNoLines() }">
-							                    <tr>
-							                    	<td>입력된 라인이 없습니다.</td>
-							                    </tr>
-						                    </c:if>
-						                    <c:forEach var="line" items ="${linePage.content }">
-							                    <tr>
-							                    	<td>${line.comp_cd }</td>
-							                    	<td>${line.plant_cd }</td>
-							                    	<td><a href="linemodify.do?no=${line.line_cd }"><c:out value="${line.line_cd}"/></a></td>
-							                    	<td>${line.line_nm }</td>
-							                    	<td>${line.use_yn }</td>
-							                    	<td>${line.in_date }</td>
-							                    	<c:if test="${line.up_date != null}"><td>${line.up_date }</td></c:if>
-							                    	<c:if test="${line.up_date == null}"><td> </td></c:if>
-							                    	<td><a class = "btn btn-danger btn-sm" href="linedelete.do?no=${line.line_cd }" onclick="return confirm('라인코드 ${line.line_cd}를 삭제하시겠습니까?');"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-												</svg> 삭제</a>
-												</td>
-							                    </tr>
-						                    </c:forEach>
-	                                    </tbody>
-	                                </table>
-	                     	</div>
-                     	</div>
-                   <%--  <div class = "text-center">
-                    	<ul class="pagination">
-                    		
-                    		<c:if test = "${orderPage.startPage > 5 }">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage-5 }">이전</a></li>
-                    		</c:if>
-                    		
-                    		
-                    		<c:forEach var = "pNo" begin="${orderPage.startPage }" end = "${orderPage.endPage }">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${pNo }">${pNo}</a></li>
-                    		</c:forEach>
-                    		
-                    		<c:if test="${orderPage.endPage < orderPage.totalPages}">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage+5 }">[다음]</a></li>
-                    		</c:if>
-                    	</ul>
-                    </div> --%>
+								<div class="col-sm-6">
+						    		<label for=plant_cd class="form-label">공장코드</label>
+					        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${factorydata.plant_cd }" readonly>
+								</div>
+								<div class="col-12">
+						    		<label for=plant_nm class="form-label">공장명</label>
+					        		<input class="form-control" type="text" id="plant_nm" name="plant_nm" value="${factorydata.plant_nm }" readonly>
+								</div>
+						    	<div class="col-sm-6">
+						    		<label for="valid_fr_dt" class="form-label">유효시작일</label>
+					        		<input class="form-control" type="date" id="valid_fr_dt" name="valid_fr_dt" value="${factorydata.valid_fr_dt }" readonly>
+								</div>
+								<div class="col-sm-6">
+						    		<label for=valid_to_dt class="form-label">유효종료일</label>
+					        		<input class="form-control" type="date" id="valid_to_dt" name="valid_to_dt" value="${factorydata.valid_to_dt }">
+								</div>
+								<div class="col-sm-6">
+						    		<label for=in_date class="form-label">등록일</label>
+					        		<input class="form-control" type="date" id="in_date" name="in_date" value="${factorydata.in_date }" >
+								</div>
+								<div class="col-12">
+						    		<label for="remark">비고(특이사항)</label>
+						    		<div id="provision">
+						        		<textarea class="form-control" rows="8" style="resize:none" name ="remark">${factorydata.remark }</textarea>
+						    		</div>
+								</div>
+								<div class ="text-center">
+									<input type="submit" class = "btn btn-primary" value="수정">
+								</div>
+						    </div>
+					    </form>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -285,8 +180,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
+        <!-- <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
