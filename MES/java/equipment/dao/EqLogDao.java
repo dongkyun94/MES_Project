@@ -16,7 +16,7 @@ import jdbc.JdbcUtil;
 public class EqLogDao {
 
 	/* 주문내용 DB 입력을 위한 insert 메소드*/
-	public EquimentLog insert(Connection conn, EquimentLog equipment) throws SQLException {
+	public EquimentLog insert(Connection conn, EquimentLog eqLog) throws SQLException {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -24,16 +24,16 @@ public class EqLogDao {
 			pstmt = conn.prepareStatement("insert into equipment_log"
 					+ " (comp_cd, plant_cd, line_cd, equip_cd, index_cd, start_time, end_time)"
 					+ " values (?, ?, ?, ?, ?, ?, ?)");
-			pstmt.setInt(1, equipment.getComp_cd());
-			pstmt.setInt(2, equipment.getPlant_cd());
-			pstmt.setString(3, equipment.getLine_cd());
-			pstmt.setString(4, equipment.equip_cd());
-			pstmt.setInt(5, equipment.index_cd());
-			pstmt.setTimestamp(6, toTimestamp(equipment.getIn_date()));
+			pstmt.setInt(1, eqLog.getComp_cd());
+			pstmt.setInt(2, eqLog.getPlant_cd());
+			pstmt.setString(3, eqLog.getLine_cd());
+			pstmt.setString(4, eqLog.equip_cd());
+			pstmt.setInt(5, eqLog.index_cd());
+			pstmt.setTimestamp(6, toTimestamp(eqLog.getStart_time()));
 			int insertedCount = pstmt.executeUpdate();
 			
 			if(insertedCount > 0) {
-				return equipment;
+				return eqLog;
 			}
 			else {
 				System.out.println("데이터 입력 실패");
@@ -79,7 +79,7 @@ public class EqLogDao {
 			rs = pstmt.executeQuery();
 			List<EquimentLog> result = new ArrayList<EquimentLog>();
 			while(rs.next()) {
-				result.add(convertEquipment(rs));
+				result.add(convertEqLog(rs));
 			}
 			return result;
 		}
@@ -96,11 +96,11 @@ public class EqLogDao {
 			pstmt = conn.prepareStatement("select * from equipment_log where line_cd = ?");
 			pstmt.setString(1, line_cd);
 			rs = pstmt.executeQuery();
-			EquimentLog equipment = new EquimentLog();
+			EquimentLog eqLog = new EquimentLog();
 			while(rs.next()) {
-				equipment = convertEquipment(rs);
+				eqLog = convertEqLog(rs);
 			}
-			return equipment;
+			return eqLog;
 		}
 		finally {
 			JdbcUtil.close(rs);
@@ -109,7 +109,7 @@ public class EqLogDao {
 	}
 
 	/*DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드*/
-	private EquimentLog convertEquipment(ResultSet rs) throws SQLException{
+	private EquimentLog convertEqLog(ResultSet rs) throws SQLException{
 		return new EquimentLog(rs.getInt("comp_cd"),
 				rs.getInt("plant_cd"),
 				rs.getString("line_cd"),

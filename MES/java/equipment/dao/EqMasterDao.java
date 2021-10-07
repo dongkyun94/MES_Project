@@ -16,10 +16,10 @@ import equipment.model.EquimentMaster;
 import jdbc.JdbcUtil;
 import line.model.Line;
 
-public class EquipmentDao {
+public class EqMasterDao {
 	
 	/* 주문내용 DB 입력을 위한 insert 메소드*/
-	public EquimentMaster insert(Connection conn, EquimentMaster equipment) throws SQLException {
+	public EquimentMaster insert(Connection conn, EquimentMaster eqMaster) throws SQLException {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -27,21 +27,21 @@ public class EquipmentDao {
 			pstmt = conn.prepareStatement("insert into equipment_master"
 					+ " (comp_cd, plant_cd, line_cd, equip_cd, index_cd, contents, grade, use_yn, in_usr_id, up_usr_id, in_date)"
 					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			pstmt.setInt(1, equipment.getComp_cd());
-			pstmt.setInt(2, equipment.getPlant_cd());
-			pstmt.setString(3, equipment.getLine_cd());
-			pstmt.setString(4, equipment.equip_cd());
-			pstmt.setInt(5, equipment.index_cd());
-			pstmt.setString(6, equipment.contents());
-			pstmt.setString(7, equipment.grade());
-			pstmt.setString(8, equipment.getUse_yn());
-			pstmt.setString(9, equipment.in_usr_id());
-			pstmt.setString(10, equipment.up_usr_id());
-			pstmt.setTimestamp(11, toTimestamp(equipment.getIn_date()));
+			pstmt.setInt(1, eqMaster.getComp_cd());
+			pstmt.setInt(2, eqMaster.getPlant_cd());
+			pstmt.setString(3, eqMaster.getLine_cd());
+			pstmt.setString(4, eqMaster.equip_cd());
+			pstmt.setInt(5, eqMaster.index_cd());
+			pstmt.setString(6, eqMaster.contents());
+			pstmt.setString(7, eqMaster.grade());
+			pstmt.setString(8, eqMaster.getUse_yn());
+			pstmt.setString(9, eqMaster.in_usr_id());
+			pstmt.setString(10, eqMaster.up_usr_id());
+			pstmt.setTimestamp(11, toTimestamp(eqMaster.getIn_date()));
 			int insertedCount = pstmt.executeUpdate();
 			
 			if(insertedCount > 0) {
-				return equipment;
+				return eqMaster;
 			}
 			else {
 				System.out.println("데이터 입력 실패");
@@ -104,11 +104,11 @@ public class EquipmentDao {
 			pstmt = conn.prepareStatement("select * from equipment_master where line_cd = ?");
 			pstmt.setString(1, line_cd);
 			rs = pstmt.executeQuery();
-			EquimentMaster equipment = new EquimentMaster();
+			EquimentMaster eqMaster = new EquimentMaster();
 			while(rs.next()) {
-				equipment = convertEquipment(rs);
+				eqMaster = convertEquipment(rs);
 			}
-			return equipment;
+			return eqMaster;
 		}
 		finally {
 			JdbcUtil.close(rs);
