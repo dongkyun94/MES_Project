@@ -71,7 +71,7 @@ public class ModifyOrderHandler implements CommandHandler{
 		String remarkVal = req.getParameter("remark");
 		
 		ModifyOrderRequest modReq = new ModifyOrderRequest(noVal, statusVal, deliveryVal, qtyVal, remarkVal);
-		req.setAttribute("modReq", modReq);
+		//req.setAttribute("modReq", modReq);
 		
 		
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();

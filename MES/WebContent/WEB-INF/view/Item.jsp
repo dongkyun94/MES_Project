@@ -297,52 +297,69 @@
 														<!-- value 태그 옆 변수들 참고 하세요!-->
 															<form action="itemmodify.do" method="post">
 										                    	<div class="row g-3">
-										                    	<div class="col-sm-12">
-											                    		<label for="order_no" class="form-label">주문번호</label>
-											                        		<input class="form-control" type="text" id="order_no" name="order_no" value="${order.order_no }" readonly>
-											                		</div>
 											                    	<div class="col-sm-6">
 											                    		<label for="comp_cd" class="form-label">회사코드</label>
-											                        		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${order.comp_cd }" readonly>
+											                        		<input type="text" class="form-control" id="comp_cd" name="comp_cd" value ="${item.comp_cd }"  readonly>
 											                		</div>
 											                		<div class="col-sm-6">
 											                    		<label for="plant_cd" class="form-label">공장코드</label>
-											                        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${order.plant_cd }" readonly>
+											                        		<input type="text" class="form-control" id="plant_cd" name="plant_cd" value ="${item.plant_cd }" readonly>
 											                		</div>
-											                		<div class="col-12">
-											                    		<label for="item_cd" class="form-label">아이템 코드</label>
-											                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${order.item_cd }" readonly>
+											                		<div class="col-sm-6">
+											                    		<label for="acct_id" class="form-label">구분</label>
+											                        		<select class="form-control" id="acct_id" name="acct_id">
+											                            		<option value="제품">제품</option>
+											                            		<option value="원재료">원재료</option>
+											                        		</select>
 											                		</div>
 											                    	<div class="col-sm-6">
-											                    		<label for="order_dt" class="form-label">주문일자</label>
-										                        		<input class="form-control" type="date" id="order_dt" name="order_dt" value="${order.order_dt }" readonly>
+											                    		<label for="item_cd" class="form-label">품목코드</label>
+										                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value ="${item.item_cd }" readonly>
+											                		</div>
+											                		<div class="col-12">
+											                    		<label for="item_nm" class="form-label">품목명</label>
+										                        		<input class="form-control" type="text" id="item_nm" name="item_nm" value ="${item.item_nm }">
 											                		</div>
 											                		<div class="col-sm-6">
-											                    		<label for=delivery_dt class="form-label">납기일자</label>
-										                        		<input class="form-control" type="date" id="delivery_dt" name="delivery_dt" value="${order.delivery_dt }">
+											                    		<label for="item_spec" class="form-label">품목규격</label>
+										                        		<input class="form-control" type="text" id="item_spec" name="item_spec" value ="${item.item_spec }">
 											                		</div>
 											                		<div class="col-sm-6">
-											                    		<label for=order_qty class="form-label">주문수량</label>
-										                        		<input class="form-control" type="text" id="order_qty" name="order_qty" value="${order.order_qty }">
+											                    		<label for="item_spec2" class="form-label">품목규격2</label>
+										                        		<input class="form-control" type="text" id="item_spec2" name="item_spec2" value ="${item.item_spec2 }">
 											                		</div>
 											                		<div class="col-sm-6">
-											                    		<label for="order_status" class="form-label">주문상태</label>
-										                        		<select class="form-control" id="order_status" name="order_status">
-										                            		<option value="초과">초과</option>
-										                            		<option value="납기">납기</option>
-										                            		<option value="미납">미납</option>
-										                        		</select>
+											                    		<label for="item_color" class="form-label">색상</label>
+										                        		<input class="form-control" type="text" id="item_color" name="item_color" value ="${item.item_color }">
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for="cust_cd" class="form-label">거래처</label>
+										                        		<input class="form-control" type="text" id="cust_cd" name="cust_cd" value ="${item.cust_cd }">
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for="acct_price" class="form-label">단가</label>
+										                        		<input class="form-control" type="text" id="acct_price" name="acct_price" value ="${item.acct_price }">
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for="currency" class="form-label">환율</label>
+										                        		<input class="form-control" type="text" id="currency" name="currency" value ="${item.currency }">
+											                		</div>
+											                		<div class="col-sm-6">
+											                    		<label for="unit_cd" class="form-label">단위</label>
+										                        		<input class="form-control" type="text" id="unit_cd" name="unit_cd" value ="${item.unit_cd }">
 											                		</div>
 											                		<div class="col-12">
 											                    		<label for="remark">비고(특이사항)</label>
 											                    		<div id="provision">
-											                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark" >${order.remark }</textarea>
+											                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark">${item.remark }</textarea>
 											                    		</div>
 											                		</div>
 											                		<div class ="text-center">
 											                			<input type="submit" class = "btn btn-primary" value="수정">
 											                		</div>
 											                    </div>
+										                    	
+										                		
 										                    </form>
 														</div>
 														<div class="modal-footer">
@@ -376,7 +393,7 @@
 															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 															</div>
 														<div class="modal-body">
-														아이템번호 ${item.item_cd }을 삭제 하시겠습니까?
+														품목번호 ${item.item_cd }을 삭제 하시겠습니까?
 														</div>
 															<div class="modal-footer">
 																<!-- 모달창에서 삭제 버튼을 클릭하면 해당 주문번호 데이터를 삭제 합니다. -->
@@ -387,37 +404,14 @@
 													</div>
 												</div>
 												</td>
-												
-												
 						                    </tr>
 					                    </c:forEach>
-					                    
                                     </tbody>
                                 </table>
-                                
                      	</div>
                      </div>
                     </div>
-                    
                     <!-- 컨테이너 영역 끝 -->
-                    
-                   <%--  <div class = "text-center">
-                    	<ul class="pagination">
-                    		
-                    		<c:if test = "${orderPage.startPage > 5 }">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage-5 }">이전</a></li>
-                    		</c:if>
-                    		
-                    		
-                    		<c:forEach var = "pNo" begin="${orderPage.startPage }" end = "${orderPage.endPage }">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${pNo }">${pNo}</a></li>
-                    		</c:forEach>
-                    		
-                    		<c:if test="${orderPage.endPage < orderPage.totalPages}">
-                    		<li class="page-item"><a href="orderlist.do?pageNo=${orderPage.startPage+5 }">[다음]</a></li>
-                    		</c:if>
-                    	</ul>
-                    </div> --%>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
