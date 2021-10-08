@@ -74,6 +74,25 @@ public class ItemDao {
 			JdbcUtil.close(stmt);
 		}
 	}
+	
+	public Item selectByNo(Connection conn, int item_cd) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from item where item_cd = ?");
+			pstmt.setInt(1, item_cd);
+			rs = pstmt.executeQuery();
+			Item item = new Item();
+			while(rs.next()) {
+				item = convertItem(rs);
+			}
+			return item;
+		}
+		finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
 
 	/* DB전체 조회 후, List에 담기 */
 	public List<Item> select (Connection conn, int startRow, int size) throws SQLException{
@@ -121,14 +140,25 @@ public class ItemDao {
 	}
 	
 	/* 수정 기능 */
-	public int update(Connection conn, String order_no, String order_status , Date delivery_dt, int order_qty, String remark) throws SQLException {
+	public int update(Connection conn, int item_cd, String acct_id , String item_nm, String item_spec, String item_spec2, 
+			String item_color, String cust_cd, int acct_price, String currency, String unit_cd,String remark, String up_usr_id, Date up_date) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("update ordering set order_status = ?, delivery_dt = ?, order_qty = ?, remark = ? where order_no = ?")) {
-			pstmt.setString(1, order_status);
-			pstmt.setTimestamp(2, toTimestamp(delivery_dt));
-			pstmt.setInt(3, order_qty);
-			pstmt.setString(4, remark);
-			pstmt.setString(5, order_no);
+				.prepareStatement("update itme set acct_id = ?, item_nm = ?, item_spec = ?, item_spec2 = ?,"
+						+ " item_color = ?, cust_cd = ?, acct_price = ?, currency = ?, unit_cd = ?,"
+						+ " up_usr_id = ?, up_date = ? where item_cd = ?")) {
+			pstmt.setString(1, acct_id);
+			pstmt.setString(2, item_nm);
+			pstmt.setString(3, item_spec);
+			pstmt.setString(4, item_spec2);
+			pstmt.setString(5, item_color);
+			pstmt.setString(6, cust_cd);
+			pstmt.setInt(7, acct_price);
+			pstmt.setString(8, currency);
+			pstmt.setString(9, unit_cd);
+			pstmt.setString(10, remark);
+			pstmt.setString(11, up_usr_id);
+			pstmt.setTimestamp(12, toTimestamp(up_date));
+			pstmt.setInt(13, item_cd);
 			return pstmt.executeUpdate();
 		}
 	}
