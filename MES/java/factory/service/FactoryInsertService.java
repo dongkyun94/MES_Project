@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import jdbc.JdbcUtil;
 import jdbc.connection.ConnectionProvider;
@@ -50,8 +51,10 @@ public class FactoryInsertService {
 	}
 
 	private Factory toFactory(FactoryInsertRequest req) throws ParseException{
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		Date today = new Date();
 		return new Factory(req.getComp_cd(), req.getPlant_cd(), req.getPlant_nm(),
-	            sdf1.parse(req.getValid_fr_dt()), sdf1.parse(req.getValid_to_dt()), req.getRemark(), null, sdf1.parse(req.getIn_date()), null, null);
+	            sdf1.parse(req.getValid_fr_dt()), sdf1.parse(req.getValid_to_dt()), req.getRemark(), req.getIn_usr_id(), 
+	            today, null, null);
 	}
 }

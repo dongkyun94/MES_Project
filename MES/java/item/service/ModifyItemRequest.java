@@ -4,28 +4,31 @@ import java.util.Date;
 
 public class ModifyItemRequest {
 	
-	private Integer item_cd;
+	private int item_cd;
 	private String acct_id;
 	private String item_nm;
 	private String item_spec;
 	private String item_spec2;
 	private String item_color;
-	private Integer acct_price;
+	private String cust_cd;
+	private int acct_price;
 	private String currency;
 	private String unit_cd;
 	private String remark;
 	private String up_usr_id;
-	private Date  up_date;
+	private Date up_date;
 	
-	public ModifyItemRequest(Integer item_cd, String acct_id, String item_nm, String item_spec, String item_spec2,
-			String item_color, Integer acct_price, String currency, String unit_cd, String remark, String up_usr_id,
-			Date up_date) {
+	public ModifyItemRequest(int item_cd, String acct_id, String item_nm, String item_spec, String item_spec2,
+			String item_color, String cust_cd, int acct_price, String currency, String unit_cd, String remark,
+			String up_usr_id, Date up_date) {
+		super();
 		this.item_cd = item_cd;
 		this.acct_id = acct_id;
 		this.item_nm = item_nm;
 		this.item_spec = item_spec;
 		this.item_spec2 = item_spec2;
 		this.item_color = item_color;
+		this.cust_cd = cust_cd;
 		this.acct_price = acct_price;
 		this.currency = currency;
 		this.unit_cd = unit_cd;
@@ -34,7 +37,7 @@ public class ModifyItemRequest {
 		this.up_date = up_date;
 	}
 
-	public Integer getItem_cd() {
+	public int getItem_cd() {
 		return item_cd;
 	}
 
@@ -58,7 +61,11 @@ public class ModifyItemRequest {
 		return item_color;
 	}
 
-	public Integer getAcct_price() {
+	public String getCust_cd() {
+		return cust_cd;
+	}
+
+	public int getAcct_price() {
 		return acct_price;
 	}
 
@@ -81,7 +88,5 @@ public class ModifyItemRequest {
 	public Date getUp_date() {
 		return up_date;
 	}
-	
-	
-	
+
 }

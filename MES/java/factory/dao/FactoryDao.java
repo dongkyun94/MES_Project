@@ -23,8 +23,8 @@ public class FactoryDao {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("insert into factory"
-					+ " (comp_cd, plant_cd, plant_nm, valid_fr_dt, valid_to_dt, remark, in_usr_id, in_date, up_usr_id )"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					+ " (comp_cd, plant_cd, plant_nm, valid_fr_dt, valid_to_dt, remark, in_usr_id, in_date)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setInt(1, factory.getComp_cd());
 			pstmt.setInt(2, factory.getPlant_cd());
 			pstmt.setString(3, factory.getPlant_nm());
@@ -33,7 +33,6 @@ public class FactoryDao {
 			pstmt.setString(6, factory.getRemark());
 			pstmt.setString(7, factory.getIn_usr_id());
 			pstmt.setTimestamp(8, toTimestamp(factory.getIn_date()));
-			pstmt.setString(9, factory.getUp_usr_id());			
 			int insertedCount = pstmt.executeUpdate();
 			
 			if(insertedCount > 0) {
@@ -113,7 +112,7 @@ public class FactoryDao {
 		}
 	}
 
-	/*DB 에서 조회한 Order 를 Order 객체로 변환하는 메소드*/
+	/*DB 에서 조회한 데이터 를 Factory 객체로 변환하는 메소드*/
 	private Factory convertFactory(ResultSet rs) throws SQLException{
 		return new Factory(rs.getInt("comp_cd"),
 				rs.getInt("plant_cd"),
@@ -135,14 +134,16 @@ public class FactoryDao {
 	}
 	
 	/* 수정 기능 */
-	public int update(Connection conn, int plant_cd, String plant_nm , Date valid_fr_dt, Date valid_to_dt, String up_usr_id) throws SQLException {
+	public int update(Connection conn, int plant_cd, String plant_nm , Date valid_fr_dt, Date valid_to_dt, String remark, String up_usr_id, Date up_date) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("update factory set plant_nm = ?, valid_fr_dt = ?, valid_to_dt = ?, up_usr_id = ? where PLANT_CD = ?")) {
+				.prepareStatement("update factory set plant_nm = ?, valid_fr_dt = ?, valid_to_dt = ?, remark = ?, up_usr_id = ?, up_date = ? where PLANT_CD = ?")) {
 			pstmt.setString(1, plant_nm);
 			pstmt.setTimestamp(2, toTimestamp(valid_fr_dt));
 			pstmt.setTimestamp(3, toTimestamp(valid_to_dt));
-			pstmt.setString(4,up_usr_id);
-			pstmt.setInt(5, plant_cd);
+			pstmt.setString(4,remark);
+			pstmt.setString(5,up_usr_id);
+			pstmt.setTimestamp(6, toTimestamp(up_date));
+			pstmt.setInt(7, plant_cd);
 			return pstmt.executeUpdate();
 		}
 	}

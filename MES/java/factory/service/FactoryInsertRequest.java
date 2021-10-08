@@ -1,9 +1,7 @@
 package factory.service;
 
-import java.util.Date;
 import java.util.Map;
 
-import factory.model.Factory;
 
 public class FactoryInsertRequest {
 
@@ -13,17 +11,17 @@ public class FactoryInsertRequest {
 	private String valid_fr_dt;
 	private String valid_to_dt;
 	private String remark;
-	private String in_date;
+	private String in_usr_id;
 	
 	public FactoryInsertRequest(Integer comp_cd, Integer plant_cd, String plant_nm, String valid_fr_dt, String valid_to_dt,
-			String remark, String in_date) {
+			String remark, String in_usr_id) {
 		this.comp_cd = comp_cd;
 		this.plant_cd = plant_cd;
 		this.plant_nm = plant_nm;
 		this.valid_fr_dt = valid_fr_dt;
 		this.valid_to_dt = valid_to_dt;
 		this.remark = remark;
-		this.in_date = in_date;		
+		this.in_usr_id = in_usr_id;
 	}
 
 	public Integer getComp_cd() {
@@ -117,24 +115,7 @@ public class FactoryInsertRequest {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-	
-	
-	
-	
-	public String getIn_date() {
-		return in_date;
-	}
-	
-	
-	
-	
-
-	public void setIn_date(String in_date) {
-		this.in_date = in_date;
-	}	
-	
-	
+		
 	public void validate(Map<String, Boolean> errors) {
 		if(comp_cd == null) {
 			errors.put("comp_cd", Boolean.TRUE);
@@ -143,6 +124,14 @@ public class FactoryInsertRequest {
 			errors.put("plant_cd", Boolean.TRUE);
 		}
 		
+	}
+
+	public String getIn_usr_id() {
+		return in_usr_id;
+	}
+
+	public void setIn_usr_id(String in_usr_id) {
+		this.in_usr_id = in_usr_id;
 	}		
 
 }

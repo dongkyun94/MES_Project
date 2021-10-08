@@ -72,7 +72,7 @@
                                     <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-industry"></i></div>
                                 생산관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -281,97 +281,10 @@
 						                    	<td>${item.comp_cd }</td>
 						                    	<td>${item.plant_cd }</td>
 						                    	<td>${item.acct_id }</td>
-						                    	<td><a href="#" data-bs-toggle="modal" data-bs-target="#contentModal"><c:out value="${item.item_cd}"/></a> <!-- 아이템코드 클릭하면 contentModal 활성화 -->
-						                    	<!--contentModal 시작 -->
-						                    	<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel">
-													<div class="modal-dialog modal-xl" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-															<h4 class="modal-title" id="myModalLabel">품목</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-														<div class="modal-body">
-														<!-- 입력 폼: 수정시에 수정 될 내용만 쓰기 활성화 이외에는 마지막에 readonly 태그-->
-														<!-- 수정 모달 버튼을 클릭하면 해당 주문번호의 내용을 담은 모달이 나옵니다-->
-														<!-- 이때 내용은 list서비스에서 페이지에 넘겨주는 List<Order> 객체 order를 통해 입력합니다-->
-														<!-- value 태그 옆 변수들 참고 하세요!-->
-															<form action="itemmodify.do" method="post">
-										                    	<div class="row g-3">
-											                    	<div class="col-sm-6">
-											                    		<label for="comp_cd" class="form-label">회사코드</label>
-											                        		<input type="text" class="form-control" id="comp_cd" name="comp_cd" value ="${item.comp_cd }"  readonly>
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="plant_cd" class="form-label">공장코드</label>
-											                        		<input type="text" class="form-control" id="plant_cd" name="plant_cd" value ="${item.plant_cd }" readonly>
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="acct_id" class="form-label">구분</label>
-											                        		<select class="form-control" id="acct_id" name="acct_id">
-											                            		<option value="제품">제품</option>
-											                            		<option value="원재료">원재료</option>
-											                        		</select>
-											                		</div>
-											                    	<div class="col-sm-6">
-											                    		<label for="item_cd" class="form-label">품목코드</label>
-										                        		<input class="form-control" type="text" id="item_cd" name="item_cd" value ="${item.item_cd }" readonly>
-											                		</div>
-											                		<div class="col-12">
-											                    		<label for="item_nm" class="form-label">품목명</label>
-										                        		<input class="form-control" type="text" id="item_nm" name="item_nm" value ="${item.item_nm }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="item_spec" class="form-label">품목규격</label>
-										                        		<input class="form-control" type="text" id="item_spec" name="item_spec" value ="${item.item_spec }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="item_spec2" class="form-label">품목규격2</label>
-										                        		<input class="form-control" type="text" id="item_spec2" name="item_spec2" value ="${item.item_spec2 }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="item_color" class="form-label">색상</label>
-										                        		<input class="form-control" type="text" id="item_color" name="item_color" value ="${item.item_color }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="cust_cd" class="form-label">거래처</label>
-										                        		<input class="form-control" type="text" id="cust_cd" name="cust_cd" value ="${item.cust_cd }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="acct_price" class="form-label">단가</label>
-										                        		<input class="form-control" type="text" id="acct_price" name="acct_price" value ="${item.acct_price }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="currency" class="form-label">환율</label>
-										                        		<input class="form-control" type="text" id="currency" name="currency" value ="${item.currency }">
-											                		</div>
-											                		<div class="col-sm-6">
-											                    		<label for="unit_cd" class="form-label">단위</label>
-										                        		<input class="form-control" type="text" id="unit_cd" name="unit_cd" value ="${item.unit_cd }">
-											                		</div>
-											                		<div class="col-12">
-											                    		<label for="remark">비고(특이사항)</label>
-											                    		<div id="provision">
-											                        		<textarea class="form-control" rows="8" style="resize:none" name ="remark">${item.remark }</textarea>
-											                    		</div>
-											                		</div>
-											                		<div class ="text-center">
-											                			<input type="submit" class = "btn btn-primary" value="수정">
-											                		</div>
-											                    </div>
-										                    	
-										                		
-										                    </form>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-primary">확인</button>
-															<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-														</div>
-													</div>
-												</div>
-											</div>
+												<td><a href="modifyitem.do?no=${item.tem_cd }"><c:out value="${item.item_cd}"/></a>
 						                    	</td>
-						                    	
-						                    	<td>${item.item_nm }</td>
+												<td><a href="itemmodify.do?no=${item.item.item_cd}"><c:out value="${item.item_cd}"/></a></td>
+												<td>${item.item_nm }</td>
 						                    	<td>${item.item_spec }</td>
 						                    	<td>${item.item_spec2 }</td>
 						                    	<td>${item.cust_cd }</td>
@@ -381,28 +294,9 @@
 						                    	<td>${item.unit_cd }</td>
 						                    	<td>${item.in_usr_id }</td>
 						                    	<td>${item.in_date }</td>
-						                    	<!-- 삭제 버튼을 만들었습니다 수정과 마찬가지로 버튼 클릭시 삭제 확인하는 모달페이지를 등장시킵니다. -->
-						                    	<td><a class = "btn btn-danger btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+						                    	<td><a class = "btn btn-danger btn-sm" href="itemdelete.do?no=${item.item_cd }"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   												<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 												</svg> 삭제</a>
-												<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
-													<div class="modal-dialog modal-sm" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-															<h4 class="modal-title" id="myModalLabel">품목삭제</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-														<div class="modal-body">
-														품목번호 ${item.item_cd }을 삭제 하시겠습니까?
-														</div>
-															<div class="modal-footer">
-																<!-- 모달창에서 삭제 버튼을 클릭하면 해당 주문번호 데이터를 삭제 합니다. -->
-																<button type="button" class="btn btn-primary" onclick="location.href='itemdelete.do?item_cd=${item.item_cd}'">확인</button>
-																<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-															</div>
-														</div>
-													</div>
-												</div>
 												</td>
 						                    </tr>
 					                    </c:forEach>

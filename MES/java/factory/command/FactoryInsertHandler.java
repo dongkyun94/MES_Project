@@ -1,12 +1,13 @@
 package factory.command;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import auth.service.User;
 import factory.service.FactoryInsertRequest;
 import factory.service.FactoryInsertService;
 import member.command.CommandHandler;
@@ -31,12 +32,13 @@ public class FactoryInsertHandler implements CommandHandler{
 		return FORM_VIEW;
 	}
 	
-	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
+	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws NumberFormatException, ParseException {
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();
 		req.setAttribute("errors", errors);
 		
-		//User user = (User)req.getSession(false).getAttribute("authUser");
-		FactoryInsertRequest factoryInsertReq = creatFactoryInsertRequest(req);
+		User user = (User)req.getSession(false).getAttribute("authUser");
+		String in_usr_id = user.getId();
+		FactoryInsertRequest factoryInsertReq = creatFactoryInsertRequest(req, in_usr_id);
 		factoryInsertReq.validate(errors);
 		
 		if(!errors.isEmpty()) {
@@ -47,11 +49,11 @@ public class FactoryInsertHandler implements CommandHandler{
 		return "factorylist.do";
 	}
 
-	private FactoryInsertRequest creatFactoryInsertRequest(HttpServletRequest req) {
+	private FactoryInsertRequest creatFactoryInsertRequest(HttpServletRequest req, String id) throws NumberFormatException, ParseException {
 		return new FactoryInsertRequest(
 				Integer.parseInt(req.getParameter("comp_cd")), Integer.parseInt(req.getParameter("plant_cd")),
-				req.getParameter("plant_nm"),req.getParameter("valid_fr_dt"),req.getParameter("valid_to_dt"),req.getParameter("remark"),req.getParameter("in_date") 
-				);
+				req.getParameter("plant_nm"), req.getParameter("valid_fr_dt"), 
+				req.getParameter("valid_to_dt"), req.getParameter("remark"),id);
 	}
 
 }

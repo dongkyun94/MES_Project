@@ -57,11 +57,10 @@
                             <a class="nav-link" href="/MES">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
-                                
                             </a>
                             <div class="sb-sidenav-menu-heading">주 메뉴</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#basicDataLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 기초데이터관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -70,49 +69,27 @@
                                     <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="#">품목관리</a>
+                                    <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                주문관리
+                            <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-industry"></i></div>
+                                생산관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="orderinsert.do">주문입력</a>
-                                    <a class="nav-link" href="orderlist.do">주문조회</a>
+                                    <a class="nav-link" href="orderlist.do">주문</a>
                                 </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Pages
+                            </div> 
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#equipLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
+                                설비알람 설정
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.do">Login</a>
-                                            <a class="nav-link" href="join.do">Register</a>
-                                            <a class="nav-link" href="changePwd.do">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
+                            <div class="collapse" id="equipLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="eqmasterlist.do">마스터테이블관리</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
@@ -135,7 +112,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">주문관리</h1>
+                        <h1 class="mt-4">공장관리</h1>
                         <c:if test="${! empty authUser }">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">${authUser.name }님, 안녕하세요</li>
@@ -143,7 +120,7 @@
                         </c:if>
                         <c:if test="${ empty authUser }">
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">주문관리</li>
+                            <li class="breadcrumb-item active">공장관리</li>
                         </ol>
                         </c:if>
                         <hr />
@@ -190,10 +167,6 @@
 						                    		<label for=valid_to_dt class="form-label">유효종료일</label>
 					                        		<input class="form-control" type="date" id="valid_to_dt" name="valid_to_dt">
 						                		</div>
-						                		<div class="col-sm-6">
-						                    		<label for=in_date class="form-label">등록일</label>
-					                        		<input class="form-control" type="date" id="in_date" name="in_date">
-						                		</div>
 						                		<div class="col-12">
 						                    		<label for="remark">비고(특이사항)</label>
 						                    		<div id="provision">
@@ -209,7 +182,6 @@
 					                    </form>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary">확인</button>
 										<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
 									</div>
 								</div>

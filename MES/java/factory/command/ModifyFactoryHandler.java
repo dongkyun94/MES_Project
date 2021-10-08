@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,12 +47,8 @@ public class ModifyFactoryHandler implements CommandHandler{
 		  if(!canModify(user)) { 
 			  res.sendError(HttpServletResponse.SC_FORBIDDEN);
 			  return FORM_VIEW; 
-		  } 
-		  ModifyFactoryRequest modReq = new ModifyFactoryRequest(noVal, loadData.getPlant_nm(),
-		  loadData.getValid_fr_dt(), loadData.getValid_to_dt(), user.getId(),
-		  loadData.getUp_date()); 
+		  }
 		  req.setAttribute("factorydata", loadData);
-		  req.setAttribute("modReq", modReq); 
 		  return FORM_VIEW; 
 		  } catch(FactoryNotFountException e) {
 		  res.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -65,16 +62,19 @@ public class ModifyFactoryHandler implements CommandHandler{
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws Exception{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		Date today = new Date();
+		String strToday = sdf.format(today);
 		User user = (User) req.getSession().getAttribute("authUser");
 		int cdVal = Integer.parseInt(req.getParameter("plant_cd"));
 		String nmVal = req.getParameter("plant_nm");
+		String remarkVal = req.getParameter("remark");
 		Date valid_fr_Val = sdf.parse(req.getParameter("valid_fr_dt"));
 		Date valid_to_Val = sdf.parse(req.getParameter("valid_to_dt"));
+		Date up_dateVal = sdf.parse(strToday);
 		String UPUSRVal = user.getId(); //수정자ID
-		Date today = new Date();
 		
-		ModifyFactoryRequest modReq = new ModifyFactoryRequest(cdVal, nmVal, valid_fr_Val, valid_to_Val, UPUSRVal, today);
+		ModifyFactoryRequest modReq = new ModifyFactoryRequest(cdVal, nmVal, valid_fr_Val, valid_to_Val, remarkVal, UPUSRVal,  up_dateVal);
 		req.setAttribute("modReq", modReq);
 		
 		

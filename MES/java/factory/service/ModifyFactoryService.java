@@ -48,7 +48,8 @@ public class ModifyFactoryService {
 			if(!canModify()) {
 				throw new PermissionDeniedException();
 			}
-			factoryDao.update(conn, modReq.getPlant_cd(), modReq.getPlant_nm(), modReq.getValid_fr_dt(), modReq.getValid_to_dt(),modReq.getUp_usr_id());
+			factoryDao.update(conn, modReq.getPlant_cd(), modReq.getPlant_nm(), modReq.getValid_fr_dt(), 
+					modReq.getValid_to_dt(), modReq.getRemark(), modReq.getUp_usr_id(), modReq.getUp_date());
 			conn.commit();
 		} catch (SQLException e) {
 			JdbcUtil.rollback(conn);

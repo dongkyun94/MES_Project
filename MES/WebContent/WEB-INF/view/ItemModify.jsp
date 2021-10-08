@@ -69,7 +69,7 @@
                                     <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="#">품목관리</a>
+                                    <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -112,7 +112,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">공장 상세</h1>
+                        <h1 class="mt-4">품목 상세</h1>
                         <c:if test="${! empty authUser }">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">${authUser.name }님, 안녕하세요</li>
@@ -120,47 +120,70 @@
                         </c:if>
                         <c:if test="${ empty authUser }">
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">공장 상세</li>
+                            <li class="breadcrumb-item active">품목 상세</li>
                         </ol>
                         </c:if>
                         <hr />
-                        <form action="factorymodify.do" method="post">
-					    	<div class="row g-3">
-					    		<div class="col-sm-6">
-						    		<label for=in_date class="form-label">등록일</label>
-					        		<input class="form-control" type="date" id="in_date" name="in_date" value="${factorydata.in_date }" >
-								</div>
-								<div class="col-sm-6">
-						    		<label for=plant_cd class="form-label">공장코드</label>
-					        		<input class="form-control" type="text" id="plant_cd" name="plant_cd" value="${factorydata.plant_cd }" readonly>
-								</div>
-						    	<div class="col-sm-6">
-						    		<label for="comp_cd" class="form-label">회사코드</label>
-						    		<input class="form-control" type="text" id="comp_cd" name="comp_cd" value="${factorydata.comp_cd }" readonly>
-								</div>
+                        <form action="itemmodify.do" method="post">
+							<div class="row g-3">
 								<div class="col-6">
-						    		<label for=plant_nm class="form-label">공장명</label>
-					        		<input class="form-control" type="text" id="plant_nm" name="plant_nm" value="${factorydata.plant_nm }">
+								   	<label for="item_cd" class="form-label">아이템 코드</label>
+								    		<input class="form-control" type="text" id="item_cd" name="item_cd" value="${itemdata.item_cd }" readonly>
 								</div>
-						    	<div class="col-sm-6">
-						    		<label for="valid_fr_dt" class="form-label">유효시작일</label>
-					        		<input class="form-control" type="date" id="valid_fr_dt" name="valid_fr_dt" value="${factorydata.valid_fr_dt }" readonly>
+								   <div class="col-sm-6">
+								   	<label for="in_date" class="form-label">등록일</label>
+									   	<input class="form-control" type="date" id="in_date" name="in_date" value="${itemdata.in_date }" readonly>
 								</div>
 								<div class="col-sm-6">
-						    		<label for=valid_to_dt class="form-label">유효종료일</label>
-					        		<input class="form-control" type="date" id="valid_to_dt" name="valid_to_dt" value="${factorydata.valid_to_dt }">
-								</div>
+						           	<label for="acct_id" class="form-label">구분</label>
+						            	<select class="form-control" id="acct_id" name="acct_id">
+						                	<option value="제품">제품</option>
+						                	<option value="원재료">원재료</option>
+						            	</select>
+						        </div>
+					       		<div class="col-12">
+					           		<label for="item_nm" class="form-label">품목명</label>
+						           		<input class="form-control" type="text" id="item_nm" name="item_nm" value="${itemdata.item_nm }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="item_spec" class="form-label">품목규격</label>
+						           		<input class="form-control" type="text" id="item_spec" name="item_spec" value="${itemdata.item_spec }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="item_spec2" class="form-label">품목규격2</label>
+						           		<input class="form-control" type="text" id="item_spec2" name="item_spec2" value="${itemdata.item_spec2 }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="item_color" class="form-label">색상</label>
+						           		<input class="form-control" type="text" id="item_color" name="item_color" value="${itemdata.item_color }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="cust_cd" class="form-label">거래처</label>
+						           		<input class="form-control" type="text" id="cust_cd" name="cust_cd" value="${itemdata.cust_cd }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="acct_price" class="form-label">단가</label>
+						           		<input class="form-control" type="text" id="acct_price" name="acct_price" value="${itemdata.acct_price }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="currency" class="form-label">환율</label>
+						           		<input class="form-control" type="text" id="currency" name="currency" value="${itemdata.currency }">
+					       		</div>
+					       		<div class="col-sm-6">
+					           		<label for="unit_cd" class="form-label">단위</label>
+						           		<input class="form-control" type="text" id="unit_cd" name="unit_cd" value="${itemdata.unit_cd }">
+					       		</div>
 								<div class="col-12">
-						    		<label for="remark">비고(특이사항)</label>
-						    		<div id="provision">
-						        		<textarea class="form-control" rows="8" style="resize:none" name ="remark">${factorydata.remark }</textarea>
-						    		</div>
+								   	<label for="remark">비고(특이사항)</label>
+								   	<div id="provision">
+								    		<textarea class="form-control" rows="8" style="resize:none" name ="remark" >${itemdata.remark }</textarea>
+								   	</div>
 								</div>
 								<div class ="text-center">
 									<input type="submit" class = "btn btn-primary" value="수정">
 								</div>
-						    </div>
-					    </form>
+							</div>
+						</form>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
