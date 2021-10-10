@@ -44,7 +44,7 @@
 		<a href="boarddelete.do?boardnum=<%=board.getBoardNum()%>&pageno=<%=pageno%>" class="btn btn-success mr-sm-3">삭제</a>
 		<a href="boardmodify.do?boardnum=<%=board.getBoardNum()%>&pageno=<%=pageno%>" class="btn btn-success mr-sm-3">수정</a>
 	</c:if>
-	<a href="boardlist.do?pageno=<%=pageno%>" class="btn btn-success">목록</a>
+	<a href="main.do?pageno=<%=pageno%>" class="btn btn-success">목록</a>
 </div>
 
 </body>

@@ -10,7 +10,7 @@ import member.command.CommandHandler;
 
 public class BoardDeleteHandler implements CommandHandler{
 
-	private static String FORM_VIEW = "index.jsp";
+	private static String FORM_VIEW = "main.do";
 	
 	BoardDeleteService boardDeleteService = new BoardDeleteService();
 
@@ -27,7 +27,7 @@ public class BoardDeleteHandler implements CommandHandler{
 		isDeleteSuccess = boardDeleteService.deleteBoard(boardNum);
 		
 		if(isDeleteSuccess) {
-			FORM_VIEW = "boardlist.do?pageno="+pageNo;
+			FORM_VIEW = "main.do?pageno="+pageNo;
 		} else {
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();

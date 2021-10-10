@@ -14,7 +14,7 @@ public class MainPageHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-String pageNo = req.getParameter("pageno");
+		String pageNo = req.getParameter("pageno");
 		
 		int page = 1;
 		int limit = 10;
