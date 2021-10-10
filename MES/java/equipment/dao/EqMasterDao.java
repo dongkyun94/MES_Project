@@ -140,4 +140,24 @@ public class EqMasterDao {
 	 * Date(timestamp.getTime()); } else { return null; } }
 	 */
 
+	/* 주문 수정 기능*/
+	public int update(Connection conn, String equip_cd, String contents,String use_yn) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("update EquimentMaster set contents = ?, use_yn = ? where equip_cd = ?")) {
+			pstmt.setString(1, contents);
+			pstmt.setString(2, use_yn);
+			pstmt.setString(3, equip_cd);
+			return pstmt.executeUpdate();
+		}
+	}
+	/* 주문 삭제 기능 */
+	public int delete(Connection conn, String equip_cd) throws SQLException {
+		try (PreparedStatement pstmt = conn
+				.prepareStatement("delete from EquimentMaster where equip_cd = ?")) {
+			pstmt.setString(1, equip_cd);
+			return pstmt.executeUpdate();
+		}
+	}
+
 }
+
