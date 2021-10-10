@@ -281,9 +281,8 @@
 						                    	<td>${item.comp_cd }</td>
 						                    	<td>${item.plant_cd }</td>
 						                    	<td>${item.acct_id }</td>
-												<td><a href="modifyitem.do?no=${item.tem_cd }"><c:out value="${item.item_cd}"/></a>
+												<td><a href="itemmodify.do?no=${item.item_cd }"><c:out value="${item.item_cd}"/></a>
 						                    	</td>
-												<td><a href="itemmodify.do?no=${item.item.item_cd}"><c:out value="${item.item_cd}"/></a></td>
 												<td>${item.item_nm }</td>
 						                    	<td>${item.item_spec }</td>
 						                    	<td>${item.item_spec2 }</td>

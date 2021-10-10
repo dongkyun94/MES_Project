@@ -12,7 +12,7 @@ public class DeleteItemHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		int item_cd = Integer.parseInt(req.getParameter("item_cd"));
+		int item_cd = Integer.parseInt(req.getParameter("no"));
 		deleteItemService.delete(item_cd);
 		return "itemlist.do";
 	}

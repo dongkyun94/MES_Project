@@ -1,6 +1,7 @@
 package jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,6 +39,45 @@ public class JdbcUtil {
 		if(conn!=null)
 			try {
 				conn.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	public static void commit(Connection conn) {
+		if(conn!=null)
+			try {
+				conn.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	public static void close(PreparedStatement pstmt, ResultSet rs) {
+		if(rs!=null)
+			try {
+				pstmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	public static void close(Statement stmt, ResultSet rs) {
+		if(rs!=null)
+			try {
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	public static void close(Connection conn, Statement stmt, ResultSet rs) {
+		if(rs!=null)
+			try {
+				conn.close();
+				stmt.close();
+				rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

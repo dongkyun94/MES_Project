@@ -55,7 +55,7 @@ public class LoginHandler implements CommandHandler{
 		try {
 			User user = loginService.login(id, password);
 			req.getSession().setAttribute("authUser", user);
-			res.sendRedirect(req.getContextPath()+"/index.jsp");
+			res.sendRedirect(req.getContextPath()+"/main.do");
 			return null;
 		} catch (LoginFailException e) {
 			errors.put("idOrPwNotMatch", Boolean.TRUE);

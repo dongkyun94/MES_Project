@@ -143,8 +143,8 @@ public class ItemDao {
 	public int update(Connection conn, int item_cd, String acct_id , String item_nm, String item_spec, String item_spec2, 
 			String item_color, String cust_cd, int acct_price, String currency, String unit_cd,String remark, String up_usr_id, Date up_date) throws SQLException {
 		try (PreparedStatement pstmt = conn
-				.prepareStatement("update itme set acct_id = ?, item_nm = ?, item_spec = ?, item_spec2 = ?,"
-						+ " item_color = ?, cust_cd = ?, acct_price = ?, currency = ?, unit_cd = ?,"
+				.prepareStatement("update item set acct_id = ?, item_nm = ?, item_spec = ?, item_spec2 = ?,"
+						+ " item_color = ?, cust_cd = ?, acct_price = ?, currency = ?, unit_cd = ?, remark = ?,"
 						+ " up_usr_id = ?, up_date = ? where item_cd = ?")) {
 			pstmt.setString(1, acct_id);
 			pstmt.setString(2, item_nm);
