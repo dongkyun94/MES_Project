@@ -1,4 +1,4 @@
-package order.service;
+package production.service;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,27 +10,27 @@ import java.util.Date;
 
 import jdbc.JdbcUtil;
 import jdbc.connection.ConnectionProvider;
-import order.dao.OrderDao;
-import order.model.Order;
+import production.dao.ProductionDao;
+import production.model.Production;
 
-public class OrderInsertService {
+public class ProductionInsertService {
 	
-	private OrderDao orderDao = new OrderDao();
+	private ProductionDao productionDao = new ProductionDao();
 	
-	public String insert(OrderInsertRequest req) {
+	public String insert(ProductionInsertRequest req) {
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
-			Order order = toOrder(req);
-			Order savedOrder = orderDao.insert(conn, order);
-			if (savedOrder == null) {
-				throw new RuntimeException("fail to insert order");
+			Production production = toProduction(req);
+			Production savedProduction = productionDao.insert(conn, production);
+			if(production == null) {
+				throw new RuntimeException("fail to insert production");
 			}
 			
 			conn.commit();
 			
-			return savedOrder.getOrder_no();
+			return savedProduction.getWo_no();
 		}catch (SQLException e) {
 			JdbcUtil.rollback(conn);
 			System.out.println(e.getMessage());
@@ -46,33 +46,30 @@ public class OrderInsertService {
 			JdbcUtil.close(conn);
 		}
 	}
-
-	private Order toOrder(OrderInsertRequest req) throws ParseException {
+	
+	private Production toProduction(ProductionInsertRequest req) throws ParseException {
 		Connection conn = null;
 		ResultSet rs = null;
 		Statement stmt = null;
 		String idx = "";
 		try {
 			conn = ConnectionProvider.getConnection();
-			String sql = "select idx_order_no.nextval seq_num from dual";
+			String sql = "select idx_wo_no.nextval seq_num from dual";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			rs.next();
 			idx = rs.getString("seq_num");
 		}catch (SQLException e) {
+			
 		}
-		
-		
-		JdbcUtil.close(conn);
-		JdbcUtil.close(stmt);
-		JdbcUtil.close(rs);
+		JdbcUtil.close(conn,stmt,rs);
 		
 		Date toDay = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		String first = sdf.format(toDay);
-		String order_no = "D"+first+ idx;
-		return new Order(req.getComp_cd(), req.getPlant_cd(), order_no, sdf1.parse(req.getOrder_dt()), req.getItem_cd(), sdf1.parse(req.getDelivery_dt()), req.getOrder_qyt(), req.getOrder_status(), req.getRemark());
+		String wo_no = "W"+first+ idx;
+		return new Production(req.getComp_cd(), req.getPlant_cd(), req.getOrder_no(), wo_no, req.getLine_cd(), req.getEquip_cd(), sdf1.parse(req.getStart_dt()), req.getStart_shift(), sdf1.parse(req.getEnd_dt()), req.getEnd_shift(), req.getFlag_end(), req.getPlan_qty(), req.getRemark());
 	}
 
 }

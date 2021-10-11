@@ -69,7 +69,7 @@
                                     <a class="nav-link" href="factorylist.do">공장관리</a>
                                     <a class="nav-link" href="linelist.do">라인관리</a>
                                     <a class="nav-link" href="#">설비관리</a>
-                                    <a class="nav-link" href="#">품목관리</a>
+                                    <a class="nav-link" href="itemlist.do">품목관리</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="orderlist.do" data-bs-toggle="collapse" data-bs-target="#orderLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -80,6 +80,11 @@
                             <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="orderlist.do">주문</a>
+                                </nav>
+                            </div> 
+                            <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="productionlist.do">생산지시</a>
                                 </nav>
                             </div> 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#equipLayouts" aria-expanded="false" aria-controls="collapseLayouts">

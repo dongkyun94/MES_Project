@@ -81,7 +81,12 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="orderlist.do">주문</a>
                                 </nav>
-                            </div> 
+                            </div>
+                            <div class="collapse" id="orderLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="productionlist.do">생산지시</a>
+                                </nav>
+                            </div>  
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#equipLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
                                 설비알람 설정

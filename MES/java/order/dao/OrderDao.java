@@ -142,5 +142,23 @@ public class OrderDao {
 			return pstmt.executeUpdate();
 		}
 	}
+	
+	/* 생산지시를 위한 주문번호 조회 메소드 */
+	public List<String> selectOrderNo(Connection conn) throws SQLException {
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<String> orderNoList = new ArrayList<String>();
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select order_no from ordering");
+			while(rs.next()) {
+				orderNoList.add(rs.getString(1));
+			}
+			return orderNoList;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
+		}
+	}
 
 }

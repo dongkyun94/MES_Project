@@ -9,6 +9,6 @@
 <body>
 비밀번호 변경 완료
 
-<a href="/MES"> 메인으로 </a>
+<a href="/main.do"> 메인으로 </a>
 </body>
 </html>

@@ -11,6 +11,7 @@
      <title>가입 완료</title>   
 </head>
 <body>
-${param.name }님, 회원 가입에 성공했습니다.
+<h1>${param.name }님, 회원 가입에 성공했습니다.</h1>
+<a href="/main.do"> 메인으로 </a>
 </body>
 </html>
